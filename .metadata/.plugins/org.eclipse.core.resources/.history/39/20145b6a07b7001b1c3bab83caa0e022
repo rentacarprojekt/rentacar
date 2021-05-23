@@ -1,5 +1,0 @@
-package hr.tvz.project.repository;
-
-public interface TestRepository {
-
-}
