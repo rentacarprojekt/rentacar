@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import hr.tvz.project.dto.UserRegistrationDto;
 import hr.tvz.project.enums.RoleEnum;
 
 @Entity
@@ -47,6 +48,14 @@ public class User implements Serializable{
 	
 	public User() {
 		super();
+	}
+	
+	public User(UserRegistrationDto userDto) {
+		this.firstName = userDto.getFirstName();
+		this.lastName = userDto.getLastName();
+		this.username = userDto.getUsername();
+		this.email = userDto.getEmail();
+		this.password = userDto.getPassword();
 	}
 
 	public Integer getId() {
