@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import hr.tvz.project.dto.UserDetailsDto;
+import hr.tvz.project.dto.UserLoginDto;
 import hr.tvz.project.dto.UserRegistrationDto;
 import hr.tvz.project.exceptions.UsernameOrEmailAlreadyInUseException;
 import hr.tvz.project.model.User;
@@ -17,5 +18,7 @@ public interface UserService {
 	public UserDetailsDto getUserByEmail(String email);
 	public UserDetailsDto getUserById(Integer id);
 	public List<UserDetailsDto> getAllUsers();
+	public UserDetailsDto validateUser(UserLoginDto user);
+	public UserDetailsDto updateUser(UserDetailsDto updatedUser);
 
 }

@@ -1,10 +1,14 @@
 package hr.tvz.project.dto;
 
+import java.io.Serializable;
+
 import hr.tvz.project.enums.RoleEnum;
 import hr.tvz.project.model.User;
 
-public class UserDetailsDto {
+public class UserDetailsDto implements Serializable{
 
+	private static final long serialVersionUID = -7906285280211033956L;
+	
 	private String firstName;
 	private String lastName;
 	private String username;
@@ -14,6 +18,10 @@ public class UserDetailsDto {
 	private String phoneNumber;
 	private String imagePath;
 	private RoleEnum role;
+	
+	public UserDetailsDto() {
+		
+	}
 	
 	public UserDetailsDto(User user) {
 		this.firstName = user.getFirstName();
