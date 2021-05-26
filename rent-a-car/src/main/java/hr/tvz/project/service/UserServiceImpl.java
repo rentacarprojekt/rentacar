@@ -1,5 +1,10 @@
 package hr.tvz.project.service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -29,6 +34,39 @@ public class UserServiceImpl implements UserService {
 		else if(emailInUse)
 			throw new UsernameOrEmailAlreadyInUseException("Email se već koristi");
 		return new UserDetailsDto(userRepository.save(new User(newUser)));
+	}
+
+	@Override
+	public UserDetailsDto getUserByUsername(String username) {
+		User user = userRepository.findByUsernameLike(username);
+		if(user!=null)
+			return new UserDetailsDto(user);
+		else
+			return null;
+	}
+
+	@Override
+	public UserDetailsDto getUserByEmail(String email) {
+		User user = userRepository.findByEmailLike(email);
+		if(user!=null)
+			return new UserDetailsDto(user);
+		else
+			return null;
+	}
+	
+	@Override
+	public UserDetailsDto getUserById(Integer id) {
+		User user = userRepository.findById(id).orElse(null);
+		if(user!=null)
+			return new UserDetailsDto(user);
+		else
+			return null;
+	}
+	
+	@Override
+	public List<UserDetailsDto> getAllUsers() {
+		List<UserDetailsDto> userList = userRepository.findAll().stream().map(user->new UserDetailsDto(user)).collect(Collectors.toList());
+		return userList;
 	}
 
 }
