@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import hr.tvz.project.dto.UserDetailsDto;
+import hr.tvz.project.dto.UserLoginDto;
 import hr.tvz.project.dto.UserRegistrationDto;
 import hr.tvz.project.exceptions.EmptyFieldsException;
 import hr.tvz.project.exceptions.UsernameOrEmailAlreadyInUseException;
@@ -67,6 +68,26 @@ public class UserServiceImpl implements UserService {
 	public List<UserDetailsDto> getAllUsers() {
 		List<UserDetailsDto> userList = userRepository.findAll().stream().map(user->new UserDetailsDto(user)).collect(Collectors.toList());
 		return userList;
+	}
+
+	@Override
+	public UserDetailsDto validateUser(UserLoginDto user) {
+		User validatedUser = userRepository.findByUsernameLikeAndPasswordLike(user.getUsername(), user.getPassword());
+		if(validatedUser!=null)
+			return new UserDetailsDto(validatedUser);
+		else
+			return null;
+	}
+
+	@Override
+	public UserDetailsDto updateUser(UserDetailsDto updatedUser) {
+		User user = userRepository.findByEmailLike(updatedUser.getEmail());
+		user.setAddress(updatedUser.getAddress());
+		user.setBio(updatedUser.getBio());
+		user.setImagePath(updatedUser.getImagePath());
+		user.setPhoneNumber(updatedUser.getPhoneNumber());
+		userRepository.save(user);
+		return updatedUser;
 	}
 
 }

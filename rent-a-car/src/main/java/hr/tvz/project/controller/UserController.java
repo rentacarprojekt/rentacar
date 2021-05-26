@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import hr.tvz.project.dto.UserDetailsDto;
+import hr.tvz.project.dto.UserLoginDto;
 import hr.tvz.project.dto.UserRegistrationDto;
 import hr.tvz.project.exceptions.EmptyFieldsException;
 import hr.tvz.project.exceptions.UsernameOrEmailAlreadyInUseException;
@@ -32,15 +34,15 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
-    @PostMapping
-    public ResponseEntity save(@RequestBody final UserRegistrationDto newUser){
+    @PostMapping("/create")
+    public ResponseEntity<String> save(@RequestBody final UserRegistrationDto newUser){
 		try {
 		userService.createNewUser(newUser);
 		}
 		catch (UsernameOrEmailAlreadyInUseException|EmptyFieldsException e) {
 			return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT).body(e.getMessage());
 		}
-		return new ResponseEntity(HttpStatus.CREATED);
+		return new ResponseEntity<String>(HttpStatus.CREATED);
     }
     
     @GetMapping("/username/{username}")
@@ -54,13 +56,24 @@ public class UserController {
     }
     
     @GetMapping("/id/{id}")
-    public UserDetailsDto getUserByEmail(@PathVariable Integer id) {
+    public UserDetailsDto getUserById(@PathVariable Integer id) {
     	return userService.getUserById(id);
     }
     
     @GetMapping("/all")
     public List<UserDetailsDto> getAllUsers() {
     	return userService.getAllUsers();
+    }
+    
+    @PostMapping("/validate")
+    public UserDetailsDto validateUser(@RequestBody UserLoginDto user) {
+    	return userService.validateUser(user);
+    }
+    
+    @PutMapping("/update")
+    public ResponseEntity<String> update(@RequestBody UserDetailsDto updatedUser){
+    	userService.updateUser(updatedUser);
+    	return new ResponseEntity<String>(HttpStatus.ACCEPTED);
     }
 
 }
