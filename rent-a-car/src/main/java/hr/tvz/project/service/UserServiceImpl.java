@@ -1,13 +1,5 @@
 package hr.tvz.project.service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import hr.tvz.project.dto.UserDetailsDto;
 import hr.tvz.project.dto.UserLoginDto;
 import hr.tvz.project.dto.UserRegistrationDto;
@@ -15,12 +7,20 @@ import hr.tvz.project.exceptions.EmptyFieldsException;
 import hr.tvz.project.exceptions.UsernameOrEmailAlreadyInUseException;
 import hr.tvz.project.model.User;
 import hr.tvz.project.repository.UserRepository;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class UserServiceImpl implements UserService {
 	
-	@Autowired
-	private UserRepository userRepository;
+
+	private final UserRepository userRepository;
+
+	public UserServiceImpl(UserRepository userRepository) {
+		this.userRepository = userRepository;
+	}
 
 	@Override
 	public UserDetailsDto createNewUser(UserRegistrationDto newUser) throws UsernameOrEmailAlreadyInUseException {
@@ -66,8 +66,7 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public List<UserDetailsDto> getAllUsers() {
-		List<UserDetailsDto> userList = userRepository.findAll().stream().map(user->new UserDetailsDto(user)).collect(Collectors.toList());
-		return userList;
+		return userRepository.findAll().stream().map(UserDetailsDto::new).collect(Collectors.toList());
 	}
 
 	@Override
