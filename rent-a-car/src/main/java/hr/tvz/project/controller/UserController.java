@@ -35,12 +35,12 @@ public class UserController {
 	private UserService userService;
 
     @PostMapping("/create")
-    public ResponseEntity<String> save(@RequestBody final UserRegistrationDto newUser){
+    public ResponseEntity<String> saveUser(@RequestBody final UserRegistrationDto newUser){
 		try {
 		userService.createNewUser(newUser);
 		}
 		catch (UsernameOrEmailAlreadyInUseException|EmptyFieldsException e) {
-			return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT).body(e.getMessage());
+			return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
 		}
 		return new ResponseEntity<String>(HttpStatus.CREATED);
     }
@@ -71,7 +71,7 @@ public class UserController {
     }
     
     @PutMapping("/update")
-    public ResponseEntity<String> update(@RequestBody UserDetailsDto updatedUser){
+    public ResponseEntity<String> updateUser(@RequestBody UserDetailsDto updatedUser){
     	userService.updateUser(updatedUser);
     	return new ResponseEntity<String>(HttpStatus.ACCEPTED);
     }
