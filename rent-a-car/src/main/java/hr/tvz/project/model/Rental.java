@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,7 +24,7 @@ public class Rental implements Serializable{
 	@ManyToOne
 	@JoinColumn(name = "USER_ID")
 	private User user;
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "VEHICLE_ID")
 	private Vehicle vehicle;
 	private LocalDate dateFrom;
