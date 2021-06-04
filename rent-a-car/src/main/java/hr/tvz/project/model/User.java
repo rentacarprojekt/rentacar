@@ -1,17 +1,10 @@
 package hr.tvz.project.model;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import hr.tvz.project.dto.UserRegistrationDto;
 import hr.tvz.project.enums.RoleEnum;
@@ -20,6 +13,7 @@ import hr.tvz.project.enums.RoleEnum;
 @Table(name = "USERS")
 public class User implements Serializable{
 
+	@Serial
 	private static final long serialVersionUID = -3975572562071301541L;
 	
 	@Id
@@ -43,7 +37,7 @@ public class User implements Serializable{
 	@Enumerated(EnumType.ORDINAL)
 	private RoleEnum role;
 	
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
 	private List<Rental> rentalList;
 	
 	public User() {

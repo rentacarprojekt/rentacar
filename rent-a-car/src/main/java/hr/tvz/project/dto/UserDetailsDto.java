@@ -1,5 +1,6 @@
 package hr.tvz.project.dto;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import hr.tvz.project.enums.RoleEnum;
@@ -7,6 +8,7 @@ import hr.tvz.project.model.User;
 
 public class UserDetailsDto implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = -7906285280211033956L;
 
     private String firstName;

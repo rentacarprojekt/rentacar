@@ -3,13 +3,7 @@ package hr.tvz.project.model;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "rental")
@@ -23,7 +17,7 @@ public class Rental implements Serializable{
 	@ManyToOne
 	@JoinColumn(name = "USER_ID")
 	private User user;
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "VEHICLE_ID")
 	private Vehicle vehicle;
 	private LocalDate dateFrom;

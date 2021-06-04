@@ -25,45 +25,44 @@ public class UserController {
 
 
     @PostMapping("/create")
-    public ResponseEntity<String> save(@RequestBody final UserRegistrationDto newUser){
-		try {
-		userService.createNewUser(newUser);
-		}
-		catch (UsernameOrEmailAlreadyInUseException|EmptyFieldsException e) {
-			return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT).body(e.getMessage());
-		}
-		return new ResponseEntity<String>(HttpStatus.CREATED);
+    public ResponseEntity<String> saveUser(@RequestBody final UserRegistrationDto newUser) {
+        try {
+            userService.createNewUser(newUser);
+        } catch (UsernameOrEmailAlreadyInUseException | EmptyFieldsException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+        }
+        return new ResponseEntity<String>(HttpStatus.CREATED);
     }
-    
+
     @GetMapping("/username/{username}")
     public UserDetailsDto getUserByUsername(@PathVariable String username) {
-    	return userService.getUserByUsername(username);
+        return userService.getUserByUsername(username);
     }
-    
+
     @GetMapping("/email/{email}")
     public UserDetailsDto getUserByEmail(@PathVariable String email) {
-    	return userService.getUserByEmail(email);
+        return userService.getUserByEmail(email);
     }
-    
+
     @GetMapping("/id/{id}")
     public UserDetailsDto getUserById(@PathVariable Integer id) {
-    	return userService.getUserById(id);
+        return userService.getUserById(id);
     }
-    
+
     @GetMapping("/all")
     public List<UserDetailsDto> getAllUsers() {
-    	return userService.getAllUsers();
+        return userService.getAllUsers();
     }
-    
+
     @PostMapping("/validate")
     public UserDetailsDto validateUser(@RequestBody UserLoginDto user) {
-    	return userService.validateUser(user);
+        return userService.validateUser(user);
     }
-    
+
     @PutMapping("/update")
-    public ResponseEntity<String> update(@RequestBody UserDetailsDto updatedUser){
-    	userService.updateUser(updatedUser);
-    	return new ResponseEntity<String>(HttpStatus.ACCEPTED);
+    public ResponseEntity<String> updateUser(@RequestBody UserDetailsDto updatedUser) {
+        userService.updateUser(updatedUser);
+        return new ResponseEntity<String>(HttpStatus.ACCEPTED);
     }
 
 }
