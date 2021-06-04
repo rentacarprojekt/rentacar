@@ -4,12 +4,13 @@ import hr.tvz.project.enums.VehicleManufacturerEnum;
 import hr.tvz.project.enums.VehicleTypeEnum;
 import hr.tvz.project.model.Vehicle;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 public class VehicleDetailsDto implements Serializable {
 
-
-//    ID ???
+    @Serial
+    private static final long serialVersionUID = -5508284222212034988L;
 
 
     private String model;

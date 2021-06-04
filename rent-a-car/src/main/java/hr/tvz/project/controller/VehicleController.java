@@ -2,8 +2,7 @@ package hr.tvz.project.controller;
 
 
 import hr.tvz.project.dto.VehicleDetailsDto;
-import hr.tvz.project.enums.VehicleManufacturerEnum;
-import hr.tvz.project.enums.VehicleTypeEnum;
+import hr.tvz.project.exceptions.VehicleNotFoundException;
 import hr.tvz.project.service.VehicleService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,35 +21,34 @@ public class VehicleController {
         this.vehicleService = vehicleService;
     }
 
+
+    @PostMapping("/create")
+    public ResponseEntity<String> saveVehicle(@RequestBody final VehicleDetailsDto newVehicle) {
+        vehicleService.createNewVehicle(newVehicle);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+
     @GetMapping("/id/{id}")
     public VehicleDetailsDto geVehicleById(@PathVariable Integer id) {
         return vehicleService.getById(id);
     }
 
-    @GetMapping("/model/{model}")
-    public VehicleDetailsDto getVehicleByModel(@PathVariable String model) {
-        return vehicleService.getByModel(model);
-    }
-
-    @GetMapping("/manufacturer/{manufacturer}")
-    public VehicleDetailsDto getVehicleByManufacturer(@PathVariable VehicleManufacturerEnum manufacturer) {
-        return vehicleService.getByManufacturer(manufacturer);
-    }
-
-    @GetMapping("/type/{type}")
-    public VehicleDetailsDto getVehicleByType(@PathVariable VehicleTypeEnum type){
-        return vehicleService.getByType(type);
-    }
 
     @GetMapping("/all")
     public List<VehicleDetailsDto> getAllCars() {
         return vehicleService.getAllCars();
     }
 
-    @PostMapping("/update")
-    public ResponseEntity<String> update(@RequestBody VehicleDetailsDto updatedVehicle){
-        vehicleService.updateCar(updatedVehicle);
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    @PutMapping("/delete")
+    public ResponseEntity<String> deleteVehicle(@RequestBody VehicleDetailsDto deletedVehicle) {
+        try{
+            vehicleService.delete(deletedVehicle);
+        }catch (VehicleNotFoundException e){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+        }
+
+        return new ResponseEntity<String>(HttpStatus.ACCEPTED);
     }
 
 

@@ -26,8 +26,8 @@ public class User implements Serializable{
 	@Column(unique = true)
 	private String username;
 	private String password;
-	@Column(unique = true)
 	private String address;
+	@Column(unique = true)
 	private String email;
 	private String bio;
 	@Column(name = "PHONE_NUMBER")
@@ -53,7 +53,24 @@ public class User implements Serializable{
 		this.role = RoleEnum.USER;
 	}
 
-	public Integer getId() {
+	public User(Integer id, String firstName, String lastName, String username, String password, String address,
+				String email, String bio, String phoneNumber, String imagePath, String role) {
+		super();
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.username = username;
+		this.password = password;
+		this.address = address;
+		this.email = email;
+		this.bio = bio;
+		this.phoneNumber = phoneNumber;
+		this.imagePath = imagePath;
+		this.role = RoleEnum.valueOf(role);
+	}
+
+
+    public Integer getId() {
 		return id;
 	}
 

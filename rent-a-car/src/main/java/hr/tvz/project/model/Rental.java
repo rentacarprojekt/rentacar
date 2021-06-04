@@ -1,5 +1,8 @@
 package hr.tvz.project.model;
 
+import hr.tvz.project.dto.RentalDetailsDto;
+import hr.tvz.project.dto.VehicleDetailsDto;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 
@@ -26,6 +29,19 @@ public class Rental implements Serializable{
 	
 	public Rental() {
 		super();
+	}
+
+
+	public Rental(RentalDetailsDto rentalDetailsDto) {
+		this.user = rentalDetailsDto.getUser();
+		this.vehicle = rentalDetailsDto.getVehicle();
+		this.dateFrom = rentalDetailsDto.getDateFrom();
+		this.dateTo = rentalDetailsDto.getDateTo();
+		this.returnDate = rentalDetailsDto.getReturnDate();
+	}
+
+	public Rental(int id, String user, String vehicle, String dateFrom, String dateTo, String returnDate) {
+//
 	}
 
 	public Integer getId() {
