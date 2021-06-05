@@ -17,5 +17,6 @@ public interface VehicleService{
 
     List<VehicleDetailsDto> getAllCars();
 
+    List<VehicleDetailsDto> getAvailableCars();
 
 }

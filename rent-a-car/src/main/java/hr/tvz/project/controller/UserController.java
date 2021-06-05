@@ -6,6 +6,8 @@ import hr.tvz.project.dto.UserRegistrationDto;
 import hr.tvz.project.exceptions.EmptyFieldsException;
 import hr.tvz.project.exceptions.UsernameOrEmailAlreadyInUseException;
 import hr.tvz.project.service.UserService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,11 +19,8 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
 
-    private final UserService userService;
-
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
+	@Autowired
+    private UserService userService;
 
 
     @PostMapping("/create")

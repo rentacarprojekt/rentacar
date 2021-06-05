@@ -31,6 +31,11 @@ public class RentalController {
     public RentalDetailsDto getRentalById(@PathVariable Integer id) {
         return rentalService.getRentalById(id);
     }
+    
+    @GetMapping("/user/{username}")
+    public RentalDetailsDto getRentalByUsername(@PathVariable String username) {
+        return rentalService.getRentalByUsername(username);
+    }
 
 
     @GetMapping("/all")

@@ -15,5 +15,6 @@ public interface RentalRepository extends JpaRepository<Rental, Integer>{
     Rental findByUserLike(User user);
     Rental findByVehicleLike(Vehicle vehicle);
     Rental findByReturnDateLike(LocalDate returnDate);
+    Rental findByUser_UsernameLike(String username);
 
 }
