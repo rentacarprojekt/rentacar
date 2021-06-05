@@ -10,7 +10,7 @@ import hr.tvz.project.model.Vehicle;
 @Repository
 public interface VehicleRepository extends JpaRepository<Vehicle, Integer>{
 
-    Vehicle findByVehicleManufacturerLike(VehicleManufacturerEnum vehicleManufacturer);
+    Vehicle findByManufacturerLike(VehicleManufacturerEnum vehicleManufacturer);
     Vehicle findByModelLike(String model);
-    Vehicle findByVehicleTypeLike(VehicleTypeEnum vehicleType);
+    Vehicle findByTypeLike(VehicleTypeEnum vehicleType);
 }
