@@ -58,6 +58,10 @@ public class Vehicle implements Serializable{
 		this.available = vehicleDetailsDto.isAvailable();
 	}
 
+	public Vehicle(int id, String model, String manufacturer, String type, String mileage, int productionYear, int price, String imagePath, boolean available) {
+
+	}
+
 	public Integer getId() {
 		return id;
 	}

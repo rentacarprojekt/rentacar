@@ -76,7 +76,7 @@ public class JdbcRentalRepositoryImpl implements JdbcRentalRepository{
     @Override
     public Optional<Rental> delete(Rental rental) {
         int executed = jdbc.update(
-                "DELETE user set " + "vehicle = ?, " + "dateFrom = ?, " + "dateTo = ? "
+                "DELETE rental set " + "vehicle = ?, " + "dateFrom = ?, " + "dateTo = ? "
                         + "returnDate = ? " + "WHERE user = ?",
                 rental.getVehicle(), rental.getDateFrom(), rental.getDateTo(), rental.getReturnDate(),
                 rental.getUser());
