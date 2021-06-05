@@ -4,7 +4,16 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import hr.tvz.project.dto.UserRegistrationDto;
 import hr.tvz.project.enums.RoleEnum;
@@ -51,6 +60,22 @@ public class User implements Serializable{
 		this.email = userDto.getEmail();
 		this.password = userDto.getPassword();
 		this.role = RoleEnum.USER;
+	}	
+
+	public User(Integer id, String firstName, String lastName, String username, String password, String address,
+			String email, String bio, String phoneNumber, String imagePath, String role) {
+		super();
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.username = username;
+		this.password = password;
+		this.address = address;
+		this.email = email;
+		this.bio = bio;
+		this.phoneNumber = phoneNumber;
+		this.imagePath = imagePath;
+		this.role = RoleEnum.valueOf(role);
 	}
 
 	public User(Integer id, String firstName, String lastName, String username, String password, String address,

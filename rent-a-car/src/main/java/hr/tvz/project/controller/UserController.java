@@ -25,13 +25,14 @@ public class UserController {
 
 
     @PostMapping("/create")
-    public ResponseEntity<String> saveUser(@RequestBody final UserRegistrationDto newUser) {
-        try {
-            userService.createNewUser(newUser);
-        } catch (UsernameOrEmailAlreadyInUseException | EmptyFieldsException e) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
-        }
-        return new ResponseEntity<String>(HttpStatus.CREATED);
+    public ResponseEntity<String> saveUser(@RequestBody final UserRegistrationDto newUser){
+		try {
+		userService.createNewUser(newUser);
+		}
+		catch (UsernameOrEmailAlreadyInUseException|EmptyFieldsException e) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+		}
+		return new ResponseEntity<String>(HttpStatus.CREATED);
     }
 
     @GetMapping("/username/{username}")
@@ -60,9 +61,9 @@ public class UserController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<String> updateUser(@RequestBody UserDetailsDto updatedUser) {
-        userService.updateUser(updatedUser);
-        return new ResponseEntity<String>(HttpStatus.ACCEPTED);
+    public ResponseEntity<String> updateUser(@RequestBody UserDetailsDto updatedUser){
+    	userService.updateUser(updatedUser);
+    	return new ResponseEntity<String>(HttpStatus.ACCEPTED);
     }
 
 }
