@@ -60,22 +60,6 @@ public class User implements Serializable{
 		this.email = userDto.getEmail();
 		this.password = userDto.getPassword();
 		this.role = RoleEnum.USER;
-	}	
-
-	public User(Integer id, String firstName, String lastName, String username, String password, String address,
-			String email, String bio, String phoneNumber, String imagePath, String role) {
-		super();
-		this.id = id;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.username = username;
-		this.password = password;
-		this.address = address;
-		this.email = email;
-		this.bio = bio;
-		this.phoneNumber = phoneNumber;
-		this.imagePath = imagePath;
-		this.role = RoleEnum.valueOf(role);
 	}
 
 	public User(Integer id, String firstName, String lastName, String username, String password, String address,
