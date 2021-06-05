@@ -15,6 +15,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import hr.tvz.project.dto.UserRegistrationDto;
 import hr.tvz.project.enums.RoleEnum;
 
@@ -46,6 +48,7 @@ public class User implements Serializable{
 	@Enumerated(EnumType.ORDINAL)
 	private RoleEnum role;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
 	private List<Rental> rentalList;
 	

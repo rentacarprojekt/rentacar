@@ -49,4 +49,15 @@ public class RentalServiceImpl implements RentalService {
         else
             return null;
     }
+
+
+	@Override
+	public RentalDetailsDto getRentalByUsername(String username) {
+
+        Rental rental = rentalRepository.findByUser_UsernameLike(username);
+        if(rental!=null)
+            return new RentalDetailsDto(rental);
+        else
+            return null;
+	}
 }

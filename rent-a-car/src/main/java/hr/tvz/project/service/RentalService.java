@@ -17,6 +17,8 @@ public interface RentalService {
 
     RentalDetailsDto getRentalById(Integer id);
 
+    RentalDetailsDto getRentalByUsername(String username);
+
 
 
 }

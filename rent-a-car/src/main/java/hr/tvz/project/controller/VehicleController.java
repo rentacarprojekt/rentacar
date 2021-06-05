@@ -39,6 +39,11 @@ public class VehicleController {
     public List<VehicleDetailsDto> getAllCars() {
         return vehicleService.getAllCars();
     }
+    
+    @GetMapping("/available")
+    public List<VehicleDetailsDto> getAvailableCars() {
+        return vehicleService.getAvailableCars();
+    }
 
     @PutMapping("/delete")
     public ResponseEntity<String> deleteVehicle(@RequestBody VehicleDetailsDto deletedVehicle) {

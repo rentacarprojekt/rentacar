@@ -14,6 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import hr.tvz.project.dto.VehicleDetailsDto;
 import hr.tvz.project.enums.VehicleManufacturerEnum;
 import hr.tvz.project.enums.VehicleTypeEnum;
@@ -40,6 +42,7 @@ public class Vehicle implements Serializable{
 	private String imagePath;
 	private boolean available;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "vehicle", fetch = FetchType.EAGER)
 	private List<Rental> rentalList;
 	

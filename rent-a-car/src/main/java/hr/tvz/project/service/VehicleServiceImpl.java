@@ -49,4 +49,9 @@ public class VehicleServiceImpl implements VehicleService {
         return vehicleRepository.findAll().stream().map(VehicleDetailsDto::new).collect(Collectors.toList());
     }
 
+	@Override
+	public List<VehicleDetailsDto> getAvailableCars() {
+		return vehicleRepository.findByAvailableTrue().stream().map(VehicleDetailsDto::new).collect(Collectors.toList());
+	}
+
 }
