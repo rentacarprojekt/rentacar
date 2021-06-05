@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import hr.tvz.project.dto.VehicleDetailsDto;
 import hr.tvz.project.enums.VehicleManufacturerEnum;
 import hr.tvz.project.enums.VehicleTypeEnum;
 
@@ -44,6 +45,17 @@ public class Vehicle implements Serializable{
 	
 	public Vehicle() {
 		super();
+	}
+
+	public Vehicle(VehicleDetailsDto vehicleDetailsDto) {
+		this.model = vehicleDetailsDto.getModel();
+		this.manufacturer = vehicleDetailsDto.getManufacturer();
+		this.type = vehicleDetailsDto.getType();
+		this.mileage = vehicleDetailsDto.getMileage();
+		this.productionYear = vehicleDetailsDto.getProductionYear();
+		this.price = vehicleDetailsDto.getPrice();
+		this.imagePath = vehicleDetailsDto.getImagePath();
+		this.available = vehicleDetailsDto.isAvailable();
 	}
 
 	public Integer getId() {

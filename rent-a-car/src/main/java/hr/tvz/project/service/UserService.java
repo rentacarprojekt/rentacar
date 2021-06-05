@@ -1,24 +1,28 @@
 package hr.tvz.project.service;
 
-import java.util.List;
-
-import org.springframework.stereotype.Service;
-
 import hr.tvz.project.dto.UserDetailsDto;
 import hr.tvz.project.dto.UserLoginDto;
 import hr.tvz.project.dto.UserRegistrationDto;
 import hr.tvz.project.exceptions.UsernameOrEmailAlreadyInUseException;
-import hr.tvz.project.model.User;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public interface UserService {
-	
-	public UserDetailsDto createNewUser(UserRegistrationDto newUser) throws UsernameOrEmailAlreadyInUseException;
-	public UserDetailsDto getUserByUsername(String username);
-	public UserDetailsDto getUserByEmail(String email);
-	public UserDetailsDto getUserById(Integer id);
-	public List<UserDetailsDto> getAllUsers();
-	public UserDetailsDto validateUser(UserLoginDto user);
-	public UserDetailsDto updateUser(UserDetailsDto updatedUser);
+
+    UserDetailsDto createNewUser(UserRegistrationDto newUser) throws UsernameOrEmailAlreadyInUseException;
+
+    UserDetailsDto getUserByUsername(String username);
+
+    UserDetailsDto getUserByEmail(String email);
+
+    UserDetailsDto getUserById(Integer id);
+
+    List<UserDetailsDto> getAllUsers();
+
+    UserDetailsDto validateUser(UserLoginDto user);
+
+    UserDetailsDto updateUser(UserDetailsDto updatedUser);
 
 }

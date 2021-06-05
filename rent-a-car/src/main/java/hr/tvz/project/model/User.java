@@ -1,5 +1,6 @@
 package hr.tvz.project.model;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 
@@ -21,6 +22,7 @@ import hr.tvz.project.enums.RoleEnum;
 @Table(name = "USERS")
 public class User implements Serializable{
 
+	@Serial
 	private static final long serialVersionUID = -3975572562071301541L;
 	
 	@Id
@@ -76,7 +78,24 @@ public class User implements Serializable{
 		this.role = RoleEnum.valueOf(role);
 	}
 
-	public Integer getId() {
+	public User(Integer id, String firstName, String lastName, String username, String password, String address,
+				String email, String bio, String phoneNumber, String imagePath, String role) {
+		super();
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.username = username;
+		this.password = password;
+		this.address = address;
+		this.email = email;
+		this.bio = bio;
+		this.phoneNumber = phoneNumber;
+		this.imagePath = imagePath;
+		this.role = RoleEnum.valueOf(role);
+	}
+
+
+    public Integer getId() {
 		return id;
 	}
 
