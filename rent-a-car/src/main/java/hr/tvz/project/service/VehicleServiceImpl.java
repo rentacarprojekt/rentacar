@@ -54,4 +54,12 @@ public class VehicleServiceImpl implements VehicleService {
 		return vehicleRepository.findByAvailableTrue().stream().map(VehicleDetailsDto::new).collect(Collectors.toList());
 	}
 
+	@Override
+	public void setAvailable(int id, boolean isAvailable) {
+		Vehicle vehicle = vehicleRepository.findById(id).orElse(null);
+		vehicle.setAvailable(isAvailable);
+		vehicleRepository.save(vehicle);
+		
+	}
+
 }

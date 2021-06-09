@@ -1,11 +1,15 @@
 package hr.tvz.project.service;
 
 import hr.tvz.project.dto.RentalDetailsDto;
+import hr.tvz.project.dto.VehicleDetailsDto;
 import hr.tvz.project.exceptions.RentalNotFoundException;
 import hr.tvz.project.model.Rental;
 import hr.tvz.project.repository.RentalRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,6 +18,8 @@ public class RentalServiceImpl implements RentalService {
 
 
     private final RentalRepository rentalRepository;
+    @Autowired
+    private VehicleService vehicleService;
 
     public RentalServiceImpl(RentalRepository rentalRepository) {
         this.rentalRepository = rentalRepository;
@@ -22,7 +28,14 @@ public class RentalServiceImpl implements RentalService {
 
     @Override
     public RentalDetailsDto createNewRental(RentalDetailsDto newRental) {
-        return new RentalDetailsDto(rentalRepository.save(new Rental(newRental)));
+    	VehicleDetailsDto vehicle = vehicleService.getById(newRental.getVehicle().getId());
+    	if(vehicle.isAvailable()) {
+    		Rental rental = rentalRepository.save(new Rental(newRental));
+    		vehicleService.setAvailable(newRental.getVehicle().getId(), false);
+    		return new RentalDetailsDto(rental);
+    	}
+    	else
+    		return null;
     }
 
     @Override
@@ -59,5 +72,13 @@ public class RentalServiceImpl implements RentalService {
             return new RentalDetailsDto(rental);
         else
             return null;
+	}
+
+	@Override
+	public void updateRental(RentalDetailsDto updatedRental) {
+		Rental rental = rentalRepository.findById(updatedRental.getId()).orElse(null);
+		rental.setReturnDate(LocalDate.now());
+		vehicleService.setAvailable(updatedRental.getVehicle().getId(), true);
+		rentalRepository.save(rental);		
 	}
 }

@@ -21,6 +21,7 @@ public class RentalDetailsDto implements Serializable {
     }
 
     public RentalDetailsDto(Rental rental) {
+    	this.id = rental.getId();
         this.user = rental.getUser();
         this.vehicle = rental.getVehicle();
         this.dateFrom = rental.getDateFrom();

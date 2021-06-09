@@ -22,7 +22,7 @@ public class VehicleController {
     }
 
 
-    @PostMapping("/create")
+    @PostMapping
     public ResponseEntity<String> saveVehicle(@RequestBody final VehicleDetailsDto newVehicle) {
         vehicleService.createNewVehicle(newVehicle);
         return new ResponseEntity<>(HttpStatus.CREATED);
@@ -45,7 +45,7 @@ public class VehicleController {
         return vehicleService.getAvailableCars();
     }
 
-    @PutMapping("/delete")
+    @DeleteMapping
     public ResponseEntity<String> deleteVehicle(@RequestBody VehicleDetailsDto deletedVehicle) {
         try{
             vehicleService.delete(deletedVehicle);

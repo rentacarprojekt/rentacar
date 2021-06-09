@@ -19,6 +19,6 @@ public interface RentalService {
 
     RentalDetailsDto getRentalByUsername(String username);
 
-
+    void updateRental(RentalDetailsDto updatedRental);
 
 }

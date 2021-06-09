@@ -20,7 +20,7 @@ public class RentalController {
         this.rentalService = rentalService;
     }
 
-    @PostMapping("/create")
+    @PostMapping
     public ResponseEntity<String> saveRental(@RequestBody final RentalDetailsDto newRental) {
         rentalService.createNewRental(newRental);
         return new ResponseEntity<>(HttpStatus.CREATED);
@@ -42,8 +42,14 @@ public class RentalController {
     public List<RentalDetailsDto> getAllRentals() {
         return rentalService.getAllRentals();
     }
+    
+    @PutMapping
+    public ResponseEntity<String> updateRental(@RequestBody RentalDetailsDto updatedRental){
+    	rentalService.updateRental(updatedRental);
+    	return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
 
-    @PutMapping("/delete")
+    @DeleteMapping
     public ResponseEntity<String> deleteRental(@RequestBody RentalDetailsDto deletedRental) {
 
         try {
