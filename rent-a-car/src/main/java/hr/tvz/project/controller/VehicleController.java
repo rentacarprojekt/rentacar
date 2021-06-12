@@ -29,13 +29,13 @@ public class VehicleController {
     }
 
 
-    @GetMapping("/id/{id}")
+    @GetMapping("/{id}")
     public VehicleDetailsDto geVehicleById(@PathVariable Integer id) {
         return vehicleService.getById(id);
     }
 
 
-    @GetMapping("/all")
+    @GetMapping
     public List<VehicleDetailsDto> getAllCars() {
         return vehicleService.getAllCars();
     }
@@ -45,10 +45,10 @@ public class VehicleController {
         return vehicleService.getAvailableCars();
     }
 
-    @DeleteMapping
-    public ResponseEntity<String> deleteVehicle(@RequestBody VehicleDetailsDto deletedVehicle) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteVehicle(@PathVariable int id) {
         try{
-            vehicleService.delete(deletedVehicle);
+            vehicleService.delete(id);
         }catch (VehicleNotFoundException e){
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
         }

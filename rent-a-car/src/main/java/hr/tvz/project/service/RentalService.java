@@ -11,7 +11,7 @@ public interface RentalService {
 
     RentalDetailsDto createNewRental(RentalDetailsDto newRental);
 
-    void deleteRental(RentalDetailsDto deletedRental) throws RentalNotFoundException;
+    void deleteRental(Integer id) throws RentalNotFoundException;
 
     List<RentalDetailsDto> getAllRentals();
 

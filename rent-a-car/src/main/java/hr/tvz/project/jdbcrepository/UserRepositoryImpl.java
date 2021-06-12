@@ -16,14 +16,14 @@ import org.springframework.stereotype.Repository;
 import hr.tvz.project.model.User;
 
 @Repository
-public class JdbcUserRepositoryImpl implements JdbcUserRepository {
+public class UserRepositoryImpl implements UserRepository {
 
 	private static final String SELECT_ALL = "SELECT id, jmbag, first_name, last_name, ects_points, date_of_birth FROM student";
 
 	private final JdbcTemplate jdbc;
 	private final SimpleJdbcInsert inserter;
 
-	public JdbcUserRepositoryImpl(JdbcTemplate jdbc) {
+	public UserRepositoryImpl(JdbcTemplate jdbc) {
 		this.jdbc = jdbc;
 		this.inserter = new SimpleJdbcInsert(jdbc).withTableName("users").usingGeneratedKeyColumns("id");
 	}

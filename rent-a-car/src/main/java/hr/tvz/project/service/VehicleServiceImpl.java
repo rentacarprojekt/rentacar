@@ -34,8 +34,8 @@ public class VehicleServiceImpl implements VehicleService {
     }
 
     @Override
-    public void delete(VehicleDetailsDto deletedVehicle) throws VehicleNotFoundException {
-        Vehicle vehicle = vehicleRepository.findByModelLike(deletedVehicle.getModel());
+    public void delete(Integer id) throws VehicleNotFoundException {
+        Vehicle vehicle = vehicleRepository.findById(id).orElse(null);
         if(vehicle!=null){
             vehicleRepository.delete(vehicle);
         } else {

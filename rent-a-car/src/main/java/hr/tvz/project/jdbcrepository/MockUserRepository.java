@@ -13,7 +13,7 @@ import hr.tvz.project.model.User;
 
 @Profile("dev")
 @Repository
-public class MockUserRepository implements JdbcUserRepository{
+public class MockUserRepository implements UserRepository{
 	
 	private final Set<User> MOCKED_USERS = new HashSet<>(
             Arrays.asList(

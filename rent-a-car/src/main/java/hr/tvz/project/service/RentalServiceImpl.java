@@ -39,8 +39,8 @@ public class RentalServiceImpl implements RentalService {
     }
 
     @Override
-    public void deleteRental(RentalDetailsDto deletedRental) throws RentalNotFoundException {
-        Rental rental = rentalRepository.findByVehicleLike(deletedRental.getVehicle());
+    public void deleteRental(Integer id) throws RentalNotFoundException {
+        Rental rental = rentalRepository.findById(id).orElse(null);
         if(rental!=null){
             rentalRepository.delete(rental);
         } else {

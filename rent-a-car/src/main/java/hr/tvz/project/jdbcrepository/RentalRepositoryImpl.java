@@ -16,7 +16,7 @@ import java.util.Optional;
 import java.util.Set;
 
 @Repository
-public class JdbcRentalRepositoryImpl implements JdbcRentalRepository{
+public class RentalRepositoryImpl implements RentalRepository{
 
     private static final String SELECT_ALL = "SELECT id, jmbag, first_name, last_name, ects_points, date_of_birth FROM student";
 
@@ -24,7 +24,7 @@ public class JdbcRentalRepositoryImpl implements JdbcRentalRepository{
     private final JdbcTemplate jdbc;
     private final SimpleJdbcInsert inserter;
 
-    public JdbcRentalRepositoryImpl(JdbcTemplate jdbc) {
+    public RentalRepositoryImpl(JdbcTemplate jdbc) {
         this.jdbc = jdbc;
         this.inserter = new SimpleJdbcInsert(jdbc).withTableName("rental").usingGeneratedKeyColumns("id");
     }
