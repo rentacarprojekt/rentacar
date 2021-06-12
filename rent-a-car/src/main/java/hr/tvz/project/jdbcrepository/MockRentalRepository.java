@@ -9,7 +9,7 @@ import java.util.*;
 
 @Profile("dev")
 @Repository
-public class MockRentalRepository implements JdbcRentalRepository{
+public class MockRentalRepository implements RentalRepository{
 
     private final Set<Rental> MOCKED_RENTALS = new HashSet<>(
             Arrays.asList(

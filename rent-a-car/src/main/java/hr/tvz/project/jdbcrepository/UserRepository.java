@@ -5,7 +5,7 @@ import java.util.Set;
 
 import hr.tvz.project.model.User;
 
-public interface JdbcUserRepository {
+public interface UserRepository {
 	
 	Set<User> findAll();
 	Optional<User> findByUsername(String username);

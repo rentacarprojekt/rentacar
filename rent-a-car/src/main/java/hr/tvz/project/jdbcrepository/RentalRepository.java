@@ -6,7 +6,7 @@ import hr.tvz.project.model.User;
 import java.util.Optional;
 import java.util.Set;
 
-public interface JdbcRentalRepository {
+public interface RentalRepository {
     Set<Rental> findAll();
     Optional<Rental> findByUser(User user);
     Optional<Rental> save(Rental rental);

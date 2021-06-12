@@ -16,14 +16,14 @@ import java.util.Optional;
 import java.util.Set;
 
 @Repository
-public class JdbcVehicleRepositoryImpl implements JdbcVehicleRepository {
+public class VehicleRepositoryImpl implements VehicleRepository {
 
     private static final String SELECT_ALL = "SELECT id, jmbag, first_name, last_name, ects_points, date_of_birth FROM student";
 
     private final JdbcTemplate jdbc;
     private final SimpleJdbcInsert inserter;
 
-    public JdbcVehicleRepositoryImpl(JdbcTemplate jdbc) {
+    public VehicleRepositoryImpl(JdbcTemplate jdbc) {
         this.jdbc = jdbc;
         this.inserter = new SimpleJdbcInsert(jdbc).withTableName("vehicles").usingGeneratedKeyColumns("id");
     }

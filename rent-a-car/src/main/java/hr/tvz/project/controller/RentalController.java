@@ -38,7 +38,7 @@ public class RentalController {
     }
 
 
-    @GetMapping("/all")
+    @GetMapping
     public List<RentalDetailsDto> getAllRentals() {
         return rentalService.getAllRentals();
     }
@@ -49,11 +49,11 @@ public class RentalController {
     	return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
-    @DeleteMapping
-    public ResponseEntity<String> deleteRental(@RequestBody RentalDetailsDto deletedRental) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteRental(@PathVariable Integer id) {
 
         try {
-            rentalService.deleteRental(deletedRental);
+            rentalService.deleteRental(id);
         } catch (RentalNotFoundException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
         }

@@ -13,7 +13,7 @@ public interface VehicleService{
 
     VehicleDetailsDto getById(Integer id);
 
-    void delete(VehicleDetailsDto vehicle) throws VehicleNotFoundException;
+    void delete(Integer id) throws VehicleNotFoundException;
 
     List<VehicleDetailsDto> getAllCars();
 

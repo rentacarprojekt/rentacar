@@ -23,7 +23,7 @@ public class UserController {
     private UserService userService;
 
 
-    @PostMapping("/create")
+    @PostMapping
     public ResponseEntity<String> saveUser(@RequestBody final UserRegistrationDto newUser){
 		try {
 		userService.createNewUser(newUser);
@@ -49,7 +49,7 @@ public class UserController {
         return userService.getUserById(id);
     }
 
-    @GetMapping("/all")
+    @GetMapping
     public List<UserDetailsDto> getAllUsers() {
         return userService.getAllUsers();
     }

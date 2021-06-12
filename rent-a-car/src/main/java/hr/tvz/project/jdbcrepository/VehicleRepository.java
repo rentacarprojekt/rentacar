@@ -5,7 +5,7 @@ import hr.tvz.project.model.Vehicle;
 import java.util.Optional;
 import java.util.Set;
 
-public interface JdbcVehicleRepository {
+public interface VehicleRepository {
     Set<Vehicle> findAll();
     Optional<Vehicle> findByModel(String model);
     Optional<Vehicle> save(Vehicle vehicle);

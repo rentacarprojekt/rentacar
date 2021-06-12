@@ -8,7 +8,7 @@ import java.util.*;
 
 @Profile("dev")
 @Repository
-public class MockVehicleRepository implements JdbcVehicleRepository{
+public class MockVehicleRepository implements VehicleRepository{
     private final Set<Vehicle> MOCKED_VEHICLES = new HashSet<>(
             Arrays.asList(
                     new Vehicle(1, "M3", "BMW", "limounsine", "2500000", 2005, 5000000, "resources/bzvz.png", true),
