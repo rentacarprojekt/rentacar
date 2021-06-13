@@ -20,6 +20,7 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     public VehicleDetailsDto createNewVehicle(VehicleDetailsDto newVehicle) {
+    	newVehicle.setAvailable(true);
         return new VehicleDetailsDto(vehicleRepository.save(new Vehicle(newVehicle)));
     }
 

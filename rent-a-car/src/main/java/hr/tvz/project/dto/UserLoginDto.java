@@ -1,8 +1,12 @@
 package hr.tvz.project.dto;
 
+import com.sun.istack.NotNull;
+
 public class UserLoginDto {
 	
+	@NotNull
 	private String username;
+	@NotNull
 	private String password;
 	
 	public String getUsername() {

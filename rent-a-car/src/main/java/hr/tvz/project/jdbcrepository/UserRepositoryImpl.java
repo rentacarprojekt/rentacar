@@ -15,10 +15,10 @@ import org.springframework.stereotype.Repository;
 
 import hr.tvz.project.model.User;
 
-@Repository
+
 public class UserRepositoryImpl implements UserRepository {
 
-	private static final String SELECT_ALL = "SELECT id, jmbag, first_name, last_name, ects_points, date_of_birth FROM student";
+	private static final String SELECT_ALL = "SELECT id, first_name, last_name, username, password, email, bio, phone_number, image_path, address, role FROM users";
 
 	private final JdbcTemplate jdbc;
 	private final SimpleJdbcInsert inserter;

@@ -12,7 +12,7 @@ public class VehicleDetailsDto implements Serializable {
     @Serial
     private static final long serialVersionUID = -5508284222212034988L;
 
-
+    private Integer id;
     private String model;
     private VehicleManufacturerEnum manufacturer;
     private VehicleTypeEnum type;
@@ -26,6 +26,7 @@ public class VehicleDetailsDto implements Serializable {
     }
 
     public VehicleDetailsDto(Vehicle vehicle) {
+    	this.id = vehicle.getId();
         this.model = vehicle.getModel();
         this.manufacturer = vehicle.getManufacturer();
         this.type = vehicle.getType();
@@ -100,4 +101,12 @@ public class VehicleDetailsDto implements Serializable {
     public void setAvailable(boolean available) {
         this.available = available;
     }
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
 }
