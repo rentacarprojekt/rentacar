@@ -21,7 +21,7 @@ public interface UserService {
 
     List<UserDetailsDto> getAllUsers();
 
-    UserDetailsDto validateUser(UserLoginDto user);
+    UserDetailsDto authenticateUser(UserLoginDto user);
 
     UserDetailsDto updateUser(UserDetailsDto updatedUser);
 

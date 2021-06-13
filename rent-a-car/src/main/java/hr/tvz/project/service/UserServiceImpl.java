@@ -70,7 +70,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserDetailsDto validateUser(UserLoginDto user) {
+	public UserDetailsDto authenticateUser(UserLoginDto user) {
 		User validatedUser = userRepository.findByUsernameLikeAndPasswordLike(user.getUsername(), user.getPassword());
 		if(validatedUser!=null)
 			return new UserDetailsDto(validatedUser);

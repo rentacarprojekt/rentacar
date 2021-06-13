@@ -1,15 +1,23 @@
 package hr.tvz.project.controller;
 
+import hr.tvz.project.dto.JsonWebToken;
 import hr.tvz.project.dto.UserDetailsDto;
 import hr.tvz.project.dto.UserLoginDto;
 import hr.tvz.project.dto.UserRegistrationDto;
 import hr.tvz.project.exceptions.EmptyFieldsException;
 import hr.tvz.project.exceptions.UsernameOrEmailAlreadyInUseException;
+import hr.tvz.project.security.JwtFilter;
+import hr.tvz.project.security.TokenProvider;
 import hr.tvz.project.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,6 +29,10 @@ public class UserController {
 
 	@Autowired
     private UserService userService;
+	@Autowired
+	private TokenProvider tokenProvider;
+	@Autowired
+	private AuthenticationManagerBuilder authenticationManagerBuilder;
 
 
     @PostMapping
@@ -54,9 +66,19 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    @PostMapping("/validate")
-    public UserDetailsDto validateUser(@RequestBody UserLoginDto user) {
-        return userService.validateUser(user);
+    @PostMapping("/authenticate")
+    public ResponseEntity<JsonWebToken> authenticateUser(@RequestBody UserLoginDto user) {
+    	UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
+    	
+    	Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+    	SecurityContextHolder.getContext().setAuthentication(authentication);
+    	
+    	String jwt = tokenProvider.createToken(authentication);
+    	
+    	HttpHeaders httpHeaders = new HttpHeaders();
+    	httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
+    	
+    	return new ResponseEntity<>(new JsonWebToken(jwt), httpHeaders, HttpStatus.OK);
     }
 
     @PutMapping
