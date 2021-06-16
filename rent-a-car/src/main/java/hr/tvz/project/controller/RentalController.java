@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("rac/rentals")
-@CrossOrigin(origins = " http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000")
 public class RentalController {
 
     private final RentalService rentalService;
@@ -33,7 +33,7 @@ public class RentalController {
     }
     
     @GetMapping("/user/{username}")
-    public RentalDetailsDto getRentalByUsername(@PathVariable String username) {
+    public List<RentalDetailsDto> getRentalByUsername(@PathVariable String username) {
         return rentalService.getRentalByUsername(username);
     }
 
