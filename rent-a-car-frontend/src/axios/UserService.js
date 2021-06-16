@@ -8,10 +8,30 @@ class UserService{
         var token = "Bearer " + localStorage.getItem('Authorization');
         var config = {
             headers: {
-               Authorization: "Bearer " + localStorage.getItem('Authorization')
+               Authorization: token
             }
-         }
+        }
         return axios.get(URL, config);
+    }
+
+    getUserByUsername(username){
+        var token = "Bearer " + localStorage.getItem('Authorization');
+        var config = {
+            headers: {
+               Authorization: token
+            }
+        }
+        return axios.get(URL + "/username/" + username, config);
+    }
+
+    updateUser(user){
+        var token = "Bearer " + localStorage.getItem('Authorization');
+        var config = {
+            headers: {
+               Authorization: token
+            }
+        }
+        return axios.put(URL, user, config);
     }
 
 }
