@@ -3,6 +3,7 @@ import { Route, Switch, Link } from "react-router-dom";
 import { Nav, Navbar, NavItem, Container } from "react-bootstrap";
 import NotFound from "./NotFound";
 import Home from "./Home";
+import UserProfile from "./User/UserProfile";
 
 class Navigation extends Component {
   state = {
@@ -24,8 +25,8 @@ class Navigation extends Component {
                 </Nav.Link>
               </NavItem>
               <NavItem>
-                <Nav.Link as={Link} to="/example1">
-                  Example
+                <Nav.Link as={Link} to="/profile">
+                  Profile
                 </Nav.Link>
               </NavItem>
               <NavItem>
@@ -50,6 +51,7 @@ class Navigation extends Component {
         </Navbar>
         <Switch>
           <Route exact path="/" component={Home} />
+          <Route exact path="/profile" component={UserProfile} />
           <Container>
             <Route path="/" component={NotFound} />
           </Container>

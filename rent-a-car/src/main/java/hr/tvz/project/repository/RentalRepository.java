@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import hr.tvz.project.model.Rental;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Repository
 public interface RentalRepository extends JpaRepository<Rental, Integer>{
@@ -15,6 +16,6 @@ public interface RentalRepository extends JpaRepository<Rental, Integer>{
     Rental findByUserLike(User user);
     Rental findByVehicleLike(Vehicle vehicle);
     Rental findByReturnDateLike(LocalDate returnDate);
-    Rental findByUser_UsernameLike(String username);
+    List<Rental> findByUser_UsernameLike(String username);
 
 }

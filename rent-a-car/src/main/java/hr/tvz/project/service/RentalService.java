@@ -17,7 +17,7 @@ public interface RentalService {
 
     RentalDetailsDto getRentalById(Integer id);
 
-    RentalDetailsDto getRentalByUsername(String username);
+    List<RentalDetailsDto> getRentalByUsername(String username);
 
     void updateRental(RentalDetailsDto updatedRental);
 

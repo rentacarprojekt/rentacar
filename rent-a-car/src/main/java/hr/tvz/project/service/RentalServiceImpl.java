@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -65,11 +66,16 @@ public class RentalServiceImpl implements RentalService {
 
 
 	@Override
-	public RentalDetailsDto getRentalByUsername(String username) {
+	public List<RentalDetailsDto> getRentalByUsername(String username) {
 
-        Rental rental = rentalRepository.findByUser_UsernameLike(username);
-        if(rental!=null)
-            return new RentalDetailsDto(rental);
+        List<Rental> rental = rentalRepository.findByUser_UsernameLike(username);
+        List<RentalDetailsDto> rentalList = new ArrayList<>();
+        if(rental!=null) {
+        	for(Rental r : rental) {
+        		rentalList.add(new RentalDetailsDto(r));
+        	}
+            return rentalList;
+        }
         else
             return null;
 	}
