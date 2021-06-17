@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import { Route, Switch, Link } from "react-router-dom";
-import { Nav, Navbar, NavItem, Container } from "react-bootstrap";
+import { Nav, Navbar, NavItem, Container, NavDropdown} from "react-bootstrap";
 import NotFound from "./NotFound";
 import Home from "./Home";
 import UserProfile from "./User/UserProfile";
+import AdminUsers from "./Admin/AdminUsers";
 
 class Navigation extends Component {
   state = {
@@ -34,6 +35,18 @@ class Navigation extends Component {
                   Example
                 </Nav.Link>
               </NavItem>
+              <NavDropdown title="Admin" id="nav-dropdown">
+                <NavDropdown.Item>
+                  <Nav.Link as={Link} to="/admin-users">
+                    Users
+                  </Nav.Link>
+                </NavDropdown.Item>
+                <NavDropdown.Item>
+                  <Nav.Link as={Link} to="/admin-vehicles">
+                    Vehicles
+                  </Nav.Link>
+                </NavDropdown.Item>
+              </NavDropdown>
             </Nav>
             <Nav>
               <NavItem>
@@ -52,6 +65,7 @@ class Navigation extends Component {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/profile" component={UserProfile} />
+          <Route exact path="/admin-users" component={AdminUsers} />
           <Container>
             <Route path="/" component={NotFound} />
           </Container>
