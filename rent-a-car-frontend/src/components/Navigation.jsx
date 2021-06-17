@@ -4,12 +4,26 @@ import { Nav, Navbar, NavItem, Container, NavDropdown} from "react-bootstrap";
 import NotFound from "./NotFound";
 import Home from "./Home";
 import UserProfile from "./User/UserProfile";
+import LoginForm from "../login/LoginForm";
+import RegisterForm from "../register/RegisterForm";
+import { LOCALES } from "../i18n";
 import AdminUsers from "./Admin/AdminUsers";
 
 class Navigation extends Component {
   state = {
     theme: "light",
   };
+
+  constructor(props) {
+    super(props);
+    /*  localStorage.setItem('Authorization', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJpem92a2ljOTgiLCJhdXRoIjoiUk9MRV9BRE1JTiIsImV4cCI6MTYyMzk4ODk1MH0.VM_tvn830af7cvTJxoeb80kgyVDiQUvC7fVnDrAVnuZ5D2XN25cYjAw5Z13e2n7UvEIXJBDupfG2v1VxIKNH6Q'); */
+    if (localStorage.getItem("language") == null) {
+      localStorage.setItem('language', LOCALES.CROATIAN);
+    }
+
+
+  }
+
   render() {
     const { theme } = this.state;
     return (
@@ -65,6 +79,8 @@ class Navigation extends Component {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/profile" component={UserProfile} />
+          <Route exact path="/login" component={LoginForm} />
+          <Route exact path="/register" component={RegisterForm} />
           <Route exact path="/admin-users" component={AdminUsers} />
           <Container>
             <Route path="/" component={NotFound} />
