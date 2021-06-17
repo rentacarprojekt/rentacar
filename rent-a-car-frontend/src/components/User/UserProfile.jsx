@@ -23,7 +23,7 @@ class UserProfile extends Component{
         this.handleBioChange = this.handleBioChange.bind(this);
         this.handlePhoneChange = this.handlePhoneChange.bind(this);
         this.handleAddressChange = this.handleAddressChange.bind(this);
-      }
+    }
 
     handleBioChange = (event) => {
         this.setState({editedUser: {...this.state.editedUser, bio: event.target.value}});
