@@ -54,8 +54,8 @@ class UserProfile extends Component{
         this.setState({showModal: false});
     }
 
-    saveChanges(){   
-        var username = jwt_decode(localStorage.getItem('Authorization')).sub;     
+    saveChanges(){
+        var username = jwt_decode(localStorage.getItem('Authorization')).sub;
         UserService.updateUser(this.state.editedUser).then(res => {
             UserService.getUserByUsername(username).then(res => {
                 this.setState({user: res.data})
@@ -123,53 +123,53 @@ class UserProfile extends Component{
                     </Col>
                 </Row>
                 <Modal show={this.state.showModal}
-                        size="lg"
-                        aria-labelledby="contained-modal-title-vcenter"
-                        centered>
+                    size="lg"
+                    aria-labelledby="contained-modal-title-vcenter"
+                    centered>
                     <Modal.Header>
-                    <Modal.Title id="contained-modal-title-vcenter">
-                        My Info
-                    </Modal.Title>
+                        <Modal.Title id="contained-modal-title-vcenter">
+                            My Info
+                        </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <Form>
                             <Form.Group className="mb-3">
                                 <Form.Label>First name</Form.Label>
-                                <Form.Control type="text" value={this.state.editedUser.firstName} disabled/>
+                                <Form.Control type="text" value={this.state.editedUser.firstName} disabled />
                             </Form.Group>
                             <Form.Group className="mb-3">
                                 <Form.Label>Last name</Form.Label>
-                                <Form.Control type="text" value={this.state.editedUser.lastName} disabled/>
+                                <Form.Control type="text" value={this.state.editedUser.lastName} disabled />
                             </Form.Group>
                             <Form.Group className="mb-3">
                                 <Form.Label>Username</Form.Label>
-                                <Form.Control type="text" value={this.state.editedUser.username} disabled/>
+                                <Form.Control type="text" value={this.state.editedUser.username} disabled />
                             </Form.Group>
                             <Form.Group className="mb-3">
                                 <Form.Label>Email</Form.Label>
-                                <Form.Control type="email" value={this.state.editedUser.email} disabled/>
+                                <Form.Control type="email" value={this.state.editedUser.email} disabled />
                             </Form.Group>
                             <Form.Group className="mb-3">
                                 <Form.Label>Address</Form.Label>
-                                <Form.Control type="text" value={this.state.editedUser.address} onChange={this.handleAddressChange}/>
+                                <Form.Control type="text" value={this.state.editedUser.address} onChange={this.handleAddressChange} />
                             </Form.Group>
                             <Form.Group className="mb-3">
                                 <Form.Label>Phone number</Form.Label>
-                                <Form.Control name="bio" type="text" value={this.state.editedUser.phoneNumber} onChange={this.handlePhoneChange}/>
+                                <Form.Control name="bio" type="text" value={this.state.editedUser.phoneNumber} onChange={this.handlePhoneChange} />
                             </Form.Group>
                             <Form.Group className="mb-3">
                                 <Form.Label>Bio</Form.Label>
-                                <Form.Control as="textarea" value={this.state.editedUser.bio} onChange={this.handleBioChange}/>
+                                <Form.Control as="textarea" value={this.state.editedUser.bio} onChange={this.handleBioChange} />
                             </Form.Group>
                         </Form>
                     </Modal.Body>
                     <Modal.Footer>
-                    <Button variant="outline-success" onClick={() => {this.saveChanges()}}>Save</Button> <Button variant="outline-danger" onClick={() => {this.hideModal()}}>Cancel</Button>
+                        <Button variant="outline-success" onClick={() => { this.saveChanges() }}>Save</Button> <Button variant="outline-danger" onClick={() => { this.hideModal() }}>Cancel</Button>
                     </Modal.Footer>
                 </Modal>
             </Container>
         );
-      }
+    }
 
 }
 export default UserProfile

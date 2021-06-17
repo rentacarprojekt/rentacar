@@ -69,15 +69,15 @@ public class UserController {
     @PostMapping("/authenticate")
     public ResponseEntity<JsonWebToken> authenticateUser(@RequestBody UserLoginDto user) {
     	UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
-    	
+
     	Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
     	SecurityContextHolder.getContext().setAuthentication(authentication);
-    	
+
     	String jwt = tokenProvider.createToken(authentication);
-    	
+
     	HttpHeaders httpHeaders = new HttpHeaders();
     	httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
-    	
+
     	return new ResponseEntity<>(new JsonWebToken(jwt), httpHeaders, HttpStatus.OK);
     }
 
