@@ -5,6 +5,7 @@ import NotFound from "./NotFound";
 import Home from "./Home";
 import UserProfile from "./User/UserProfile";
 import AdminUsers from "./Admin/AdminUsers";
+import AdminVehicles from "./Admin/AdminVehicles";
 
 class Navigation extends Component {
   state = {
@@ -66,6 +67,7 @@ class Navigation extends Component {
           <Route exact path="/" component={Home} />
           <Route exact path="/profile" component={UserProfile} />
           <Route exact path="/admin-users" component={AdminUsers} />
+          <Route exact path="/admin-vehicles" component={AdminVehicles} />
           <Container>
             <Route path="/" component={NotFound} />
           </Container>

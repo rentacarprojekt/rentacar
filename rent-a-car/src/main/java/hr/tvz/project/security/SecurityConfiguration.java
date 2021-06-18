@@ -38,6 +38,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         .authorizeRequests()
         .antMatchers(HttpMethod.GET, "/rac/vehicles/**").permitAll()
         .antMatchers(HttpMethod.POST, "/rac/vehicles/**").hasAuthority(RoleEnum.ROLE_ADMIN.toString())
+        .antMatchers(HttpMethod.DELETE, "/rac/vehicles/**").hasAuthority(RoleEnum.ROLE_ADMIN.toString())
         .antMatchers(HttpMethod.POST, "/rac/users/**").permitAll()
         .anyRequest().authenticated()
         .and()
