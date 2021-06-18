@@ -6,46 +6,49 @@ import { FormattedMessage, IntlProvider } from 'react-intl';
 
 function RegisterForm({ Login, Register, error }) {
 
+
+    const [locale, setLocale] = useState({
+        label: localStorage.getItem('language') == LOCALES.CROATIAN ? LOCALES.ENGLISH : LOCALES.CROATIAN
+    });
+
+    const onButtonClicked = (e) => {
+
+        e.preventDefault();
+
+        if (localStorage.getItem('language') == LOCALES.CROATIAN) {
+
+            localStorage.setItem('language', LOCALES.ENGLISH);
+            setLocale({ label: LOCALES.CROATIAN });
+
+        } else {
+
+            localStorage.setItem('language', LOCALES.CROATIAN);
+            setLocale({ label: LOCALES.ENGLISH });
+
+        }
+
+    }
+
+
     const [details, setDetails] = useState({
         firstName: "", lastName: "", address: "",
         userName: "", email: "", phone: "", password: ""
     });
 
-    const [locale, setLocale] = useState({
-        lang: LOCALES.CROATIAN
-    });
 
-
-    const [label, setLabel] = useState({
-        label: "ENG"
-    });
 
     const submitHandler = e => {
         e.preventDefault();
         Register(details);
     }
 
-    const onButtonClicked = (e) => {
-
-        e.preventDefault();
-
-        if (locale.lang == LOCALES.CROATIAN) {
-            setLocale({ lang: LOCALES.ENGLISH });
-            setLabel({ label: "CRO" });
-        } else {
-            setLocale({ lang: LOCALES.CROATIAN });
-            setLabel({ label: "ENG" });
-        }
-    }
-
-
 
 
     return (
 
-        <I18nProvider locale={locale.lang}>
-            <form onSubmit={submitHandler}  >
-                <button onClick={onButtonClicked} className="lbtn lang">{label.label}</button>
+        <I18nProvider locale={localStorage.getItem('language')}>
+            <form onSubmit={submitHandler} className="logRegForm"  >
+                <button onClick={onButtonClicked} className="lbtn lang buttonLogReg">{locale.label}</button>
                 <div className="register-form">
                     <div className="registerLogo"></div>
                     <h2 className="login"><FormattedMessage id="register" /></h2>
@@ -73,7 +76,7 @@ function RegisterForm({ Login, Register, error }) {
                         </FormattedMessage>
 
                     </div>
-                    <div className="form-group">
+                    {/*                     <div className="form-group">
                         <FormattedMessage id="address" >
                             {placeholder =>
                                 <input type="text" id="address"
@@ -82,7 +85,7 @@ function RegisterForm({ Login, Register, error }) {
                                     placeholder={placeholder} />
                             }
                         </FormattedMessage>
-                    </div>
+                    </div> */}
                     <div className="form-group">
                         <FormattedMessage id="username" >
                             {placeholder =>
@@ -104,7 +107,7 @@ function RegisterForm({ Login, Register, error }) {
 
                         </FormattedMessage>
                     </div>
-                    <div className="form-group">
+                    {/*                     <div className="form-group">
                         <FormattedMessage id="phone">
                             {placeholder =>
                                 <input type="tel" id="phone"
@@ -113,7 +116,7 @@ function RegisterForm({ Login, Register, error }) {
                                     placeholder={placeholder} />
                             }
                         </FormattedMessage>
-                    </div>
+                    </div> */}
                     <div className="form-group">
                         <FormattedMessage id="password">
                             {placeholder =>

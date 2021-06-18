@@ -8,7 +8,7 @@ import './Login.css';
 function LoginForm({ Login, error }) {
 
 
-    const [label, setLabel] = useState({
+    const [locale, setLocale] = useState({
         label: localStorage.getItem('language') == LOCALES.CROATIAN ? LOCALES.ENGLISH : LOCALES.CROATIAN
     });
 
@@ -19,15 +19,12 @@ function LoginForm({ Login, error }) {
         if (localStorage.getItem('language') == LOCALES.CROATIAN) {
 
             localStorage.setItem('language', LOCALES.ENGLISH);
-            setLabel({ label: LOCALES.CROATIAN });
-
-
+            setLocale({ label: LOCALES.CROATIAN });
 
         } else {
 
             localStorage.setItem('language', LOCALES.CROATIAN);
-            setLabel({ label: LOCALES.ENGLISH });
-
+            setLocale({ label: LOCALES.ENGLISH });
 
         }
 
@@ -44,8 +41,8 @@ function LoginForm({ Login, error }) {
 
     return (
         <I18nProvider locale={localStorage.getItem('language')}>
-            <form onSubmit={submitHandler}  >
-                <button onClick={onButtonClicked} className="lbtn lang">{label.label}</button>
+            <form onSubmit={submitHandler} className="logRegForm"  >
+                <button onClick={onButtonClicked} className="lbtn lang buttonLogReg">{locale.label}</button>
                 <div className="login-form">
                     <div className="logo"></div>
                     <h2 className="login" ><FormattedMessage id="login" /></h2>
