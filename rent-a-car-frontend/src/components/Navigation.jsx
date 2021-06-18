@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { Route, Switch, Link } from "react-router-dom";
-import { Nav, Navbar, NavItem, Container, NavDropdown} from "react-bootstrap";
+import { Route, Switch, Link, withRouter } from "react-router-dom";
+import { Nav, Navbar, NavItem, Container, NavDropdown, Button} from "react-bootstrap";
 import NotFound from "./NotFound";
 import Home from "./Home";
 import UserProfile from "./User/UserProfile";
@@ -9,27 +9,30 @@ import RegisterForm from "../register/RegisterForm";
 import { LOCALES } from "../i18n";
 import AdminUsers from "./Admin/AdminUsers";
 import AdminVehicles from "./Admin/AdminVehicles";
+import jwt_decode from "jwt-decode";
 
 class Navigation extends Component {
-  state = {
-    theme: "light",
-  };
-
   constructor(props) {
     super(props);
-    /*  localStorage.setItem('Authorization', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJpem92a2ljOTgiLCJhdXRoIjoiUk9MRV9BRE1JTiIsImV4cCI6MTYyMzk4ODk1MH0.VM_tvn830af7cvTJxoeb80kgyVDiQUvC7fVnDrAVnuZ5D2XN25cYjAw5Z13e2n7UvEIXJBDupfG2v1VxIKNH6Q'); */
+    this.state = {
+    }
+    /*  localStorage.setItem('Authorization', 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJoZ2R4ZmFzZGh0IiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTYyNDA0MjM2NH0.R9TgVXXTNSfRprCNMjoTDPGsHPBLS0ze0fl0R4VWpMfqnOe2dQTthYIVhxZoHiGSIWjtwJzKku6dkA2HHMzl9w'); */
     if (localStorage.getItem("language") == null) {
       localStorage.setItem('language', LOCALES.CROATIAN);
     }
+    this.logout = this.logout.bind(this);
+  }
 
-
+  logout(){
+    localStorage.removeItem('Authorization');
+    this.props.history.push('/');
   }
 
   render() {
     const { theme } = this.state;
     return (
       <React.Fragment>
-        <Navbar bg={theme}>
+        <Navbar>
           <Container>
             <Navbar.Brand as={Link} to="/">
               Home
@@ -41,7 +44,7 @@ class Navigation extends Component {
                 </Nav.Link>
               </NavItem>
               <NavItem>
-                <Nav.Link as={Link} to="/profile">
+                <Nav.Link as={Link} to="/profile" hidden={localStorage.getItem('Authorization') == null}>
                   Profile
                 </Nav.Link>
               </NavItem>
@@ -50,7 +53,7 @@ class Navigation extends Component {
                   Example
                 </Nav.Link>
               </NavItem>
-              <NavDropdown title="Admin" id="nav-dropdown">
+              <NavDropdown title="Admin" id="nav-dropdown" hidden={localStorage.getItem('Authorization') == null ? true : jwt_decode(localStorage.getItem('Authorization')).auth != 'ROLE_ADMIN'}>
                 <NavDropdown.Item>
                   <Nav.Link as={Link} to="/admin-users">
                     Users
@@ -63,7 +66,14 @@ class Navigation extends Component {
                 </NavDropdown.Item>
               </NavDropdown>
             </Nav>
-            <Nav>
+            <Nav hidden={localStorage.getItem('Authorization') == null}>
+              <NavItem>
+                <Button onClick = {this.logout}>
+                  Logout
+                </Button>
+              </NavItem>
+            </Nav>
+            <Nav hidden={localStorage.getItem('Authorization') != null}>
               <NavItem>
                 <Nav.Link as={Link} to="/login">
                   Login
@@ -93,4 +103,4 @@ class Navigation extends Component {
   }
 }
 
-export default Navigation;
+export default withRouter(Navigation);
