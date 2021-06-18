@@ -36,13 +36,16 @@ class UserProfile extends Component{
     }
 
     componentDidMount() {
+        if(localStorage.getItem('Authorization')==null)
+            this.props.history.push('/')
+        else{
         var username = jwt_decode(localStorage.getItem('Authorization')).sub;
         RentalService.getRentalsForUsername(username).then(res => {
             this.setState({rentals: res.data})
         });
         UserService.getUserByUsername(username).then(res => {
             this.setState({user: res.data})
-        });
+        });}
     }
 
     showModal(){

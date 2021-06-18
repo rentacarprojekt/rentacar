@@ -15,13 +15,18 @@ class AdminUsers extends Component{
     }    
 
     componentDidMount() {
+        if(localStorage.getItem('Authorization')==null)
+            this.props.history.push('/')
+        else if(jwt_decode(localStorage.getItem('Authorization')).auth != 'ROLE_ADMIN')
+            this.props.history.push('/')
+        else{
         var username = jwt_decode(localStorage.getItem('Authorization')).sub;
         UserService.getUserByUsername(username).then(res => {
             this.setState({user: res.data})
         });
         UserService.getUsers().then(res => {
             this.setState({users: res.data})
-        });
+        });}
     }
 
     handleChange(username) {
