@@ -11,6 +11,7 @@ public class UserDetailsDto implements Serializable {
     @Serial
     private static final long serialVersionUID = -7906285280211033956L;
 
+    private Integer id;
     private String firstName;
     private String lastName;
     private String username;
@@ -26,6 +27,7 @@ public class UserDetailsDto implements Serializable {
     }
 
     public UserDetailsDto(User user) {
+    	this.id = user.getId();
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
         this.username = user.getUsername();
@@ -108,5 +110,13 @@ public class UserDetailsDto implements Serializable {
     public void setRole(RoleEnum role) {
         this.role = role;
     }
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
 }

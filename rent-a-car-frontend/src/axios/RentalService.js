@@ -14,6 +14,26 @@ class RentalService{
         return axios.get(URL + "/user/" + username, config);
     }
 
+    newRental(rental){
+        var token = "Bearer " + localStorage.getItem('Authorization');
+        var config = {
+            headers: {
+               Authorization: token
+            }
+         }
+        return axios.post(URL, rental, config);
+    }
+
+    returnVehicle(rental){
+        var token = "Bearer " + localStorage.getItem('Authorization');
+        var config = {
+            headers: {
+               Authorization: token
+            }
+         }
+        return axios.put(URL, rental, config);
+    }
+
 }
 
 export default new RentalService();

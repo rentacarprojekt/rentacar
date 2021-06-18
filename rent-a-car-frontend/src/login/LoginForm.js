@@ -61,8 +61,8 @@ class LoginForm extends Component {
     render(){
         return (
             <I18nProvider locale={localStorage.getItem('language')}>
-                <form onSubmit={this.submitHandler}  >
-                    <button onClick={this.onButtonClicked} className="lbtn lang">{this.state.label}</button>
+                <form onSubmit={this.submitHandler} className="logRegForm" >
+                    <button onClick={this.onButtonClicked} className="lbtn lang buttonLogReg">{this.state.label}</button>
                     <div className="login-form">
                         <div className="logo"></div>
                         <h2 className="login" ><FormattedMessage id="login" /></h2>
@@ -71,7 +71,6 @@ class LoginForm extends Component {
                             <FormattedMessage classname="error" id="details_mismatch" />
                             </p>
                         </Alert>
-                        {/*(this.state.error != "") ? (<div className="error"><FormattedMessage classname="error" id="details_mismatch" /></div>) : ""*/}
                         <div className="form-group">
                             <FormattedMessage id="username">
                                 {placeholder =>

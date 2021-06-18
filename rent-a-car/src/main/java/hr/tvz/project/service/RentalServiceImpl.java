@@ -30,6 +30,7 @@ public class RentalServiceImpl implements RentalService {
     @Override
     public RentalDetailsDto createNewRental(RentalDetailsDto newRental) {
     	VehicleDetailsDto vehicle = vehicleService.getById(newRental.getVehicle().getId());
+    	newRental.setDateFrom(LocalDate.now());
     	if(vehicle.isAvailable()) {
     		Rental rental = rentalRepository.save(new Rental(newRental));
     		vehicleService.setAvailable(newRental.getVehicle().getId(), false);
