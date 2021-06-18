@@ -34,6 +34,10 @@ class UserService{
         return axios.put(URL, user, config);
     }
 
+    login(user){
+        return axios.post(URL+ "/authenticate", user)
+    }
+
 }
 
 export default new UserService();
