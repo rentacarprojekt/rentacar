@@ -8,10 +8,30 @@ class RentalService{
         var token = "Bearer " + localStorage.getItem('Authorization');
         var config = {
             headers: {
-               Authorization: "Bearer " + localStorage.getItem('Authorization')
+               Authorization: token
             }
          }
         return axios.get(URL + "/user/" + username, config);
+    }
+
+    newRental(rental){
+        var token = "Bearer " + localStorage.getItem('Authorization');
+        var config = {
+            headers: {
+               Authorization: token
+            }
+         }
+        return axios.post(URL, rental, config);
+    }
+
+    returnVehicle(rental){
+        var token = "Bearer " + localStorage.getItem('Authorization');
+        var config = {
+            headers: {
+               Authorization: token
+            }
+         }
+        return axios.put(URL, rental, config);
     }
 
 }

@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("rac/vehicles")
-@CrossOrigin(origins = " http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000")
 public class VehicleController {
 
     private final VehicleService vehicleService;

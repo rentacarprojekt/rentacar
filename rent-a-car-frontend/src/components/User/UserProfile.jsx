@@ -18,11 +18,25 @@ class UserProfile extends Component{
             rentals: [],
             user: {},
             showModal: false,
-            editedUser: {}
+            showModal2: false,
+            editedUser: {},
+            rental: {
+                vehicle:{
+                    model: '',
+                    manufacturer: '',
+                    type:'',
+                    mileage: '',
+                    productionYear: '',
+                    price: ''
+                },
+                dateFrom:'',
+                returnDate:''
+            }
         }
         this.handleBioChange = this.handleBioChange.bind(this);
         this.handlePhoneChange = this.handlePhoneChange.bind(this);
         this.handleAddressChange = this.handleAddressChange.bind(this);
+        this.handleRent = this.handleRent.bind(this)
     }
 
     handleBioChange = (event) => {
@@ -36,22 +50,35 @@ class UserProfile extends Component{
     }
 
     componentDidMount() {
+        if(localStorage.getItem('Authorization')==null)
+            this.props.history.push('/')
+        else{
         var username = jwt_decode(localStorage.getItem('Authorization')).sub;
         RentalService.getRentalsForUsername(username).then(res => {
             this.setState({rentals: res.data})
         });
         UserService.getUserByUsername(username).then(res => {
             this.setState({user: res.data})
-        });
+        });}
     }
 
     showModal(){
         this.setState({editedUser: this.state.user});
         this.setState({showModal: true});
     }
+    
+    showModal2(rentalDetails){
+        this.setState({editedUser: this.state.user});
+        this.setState({rental: rentalDetails});
+        this.setState({showModal2: true});
+    }
 
     hideModal(){
         this.setState({showModal: false});
+    }
+
+    hideModal2(){
+        this.setState({showModal2: false});
     }
 
     saveChanges(){
@@ -63,6 +90,13 @@ class UserProfile extends Component{
         });
         this.hideModal();
     }
+
+    handleRent(rentalId, userId, vehicleId){
+        let rental = {id: rentalId, user:{id: userId}, vehicle:{id: vehicleId}}
+        RentalService.returnVehicle(rental).then(res =>{
+          window.location.reload(true);
+        })
+      }
 
     render() {
         return(
@@ -116,6 +150,12 @@ class UserProfile extends Component{
                                     <td>{item.vehicle.manufacturer}</td>
                                     <td>{item.vehicle.type}</td>
                                     <td>{item.vehicle.price}</td>
+                                    <td>
+                                        <Button hidden={item.returnDate != null} onClick={() => this.handleRent(item.id, item.user.id, item.vehicle.id)}>
+                                            Return
+                                        </Button>
+                                        <Button variant="outline-primary" hidden={item.returnDate == null} onClick={() => this.showModal2(item)}>Details</Button>
+                                    </td>
                                 </tr>
                                 ))}
                             </tbody>
@@ -165,6 +205,55 @@ class UserProfile extends Component{
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="outline-success" onClick={() => { this.saveChanges() }}>Save</Button> <Button variant="outline-danger" onClick={() => { this.hideModal() }}>Cancel</Button>
+                    </Modal.Footer>
+                </Modal>
+                <Modal show={this.state.showModal2}
+                    size="lg"
+                    aria-labelledby="contained-modal-title-vcenter"
+                    centered>
+                    <Modal.Header>
+                        <Modal.Title id="contained-modal-title-vcenter">
+                            Rental Info
+                        </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Form>
+                            <Form.Group className="mb-3">
+                                <Form.Label>Model</Form.Label>
+                                <Form.Control type="text" value={this.state.rental.vehicle.model} disabled />
+                            </Form.Group>
+                            <Form.Group className="mb-3">
+                                <Form.Label>Manufacturer</Form.Label>
+                                <Form.Control type="text" value={this.state.rental.vehicle.manufacturer} disabled />
+                            </Form.Group>
+                            <Form.Group className="mb-3">
+                                <Form.Label>Type</Form.Label>
+                                <Form.Control type="text" value={this.state.rental.vehicle.type} disabled />
+                            </Form.Group>
+                            <Form.Group className="mb-3">
+                                <Form.Label>Mileage</Form.Label>
+                                <Form.Control type="text" value={this.state.rental.vehicle.mileage} disabled />
+                            </Form.Group>
+                            <Form.Group className="mb-3">
+                                <Form.Label>Production year</Form.Label>
+                                <Form.Control type="text" value={this.state.rental.vehicle.productionYear} disabled />
+                            </Form.Group>
+                            <Form.Group className="mb-3">
+                                <Form.Label>Price</Form.Label>
+                                <Form.Control type="text" value={this.state.rental.vehicle.price} disabled />
+                            </Form.Group>
+                            <Form.Group className="mb-3">
+                                <Form.Label>Rental date</Form.Label>
+                                <Form.Control type="text" value={this.state.rental.dateFrom} disabled />
+                            </Form.Group>
+                            <Form.Group className="mb-3">
+                                <Form.Label>Return date</Form.Label>
+                                <Form.Control type="text" value={this.state.rental.returnDate} disabled />
+                            </Form.Group>
+                        </Form>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="outline-danger" onClick={() => { this.hideModal2() }}>Close</Button>
                     </Modal.Footer>
                 </Modal>
             </Container>

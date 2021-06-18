@@ -3,6 +3,7 @@ package hr.tvz.project.model;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -43,7 +44,7 @@ public class Vehicle implements Serializable{
 	private boolean available;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "vehicle", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "vehicle", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Rental> rentalList;
 	
 	public Vehicle() {

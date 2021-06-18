@@ -1,6 +1,6 @@
 
   .buttonLogReg{
-    background-color: #5089fc; 
+    background-color: #5089fc;
     border: 1px solid transparent;
     color: white;
     padding: 10px 20px;
@@ -10,16 +10,16 @@
     font-size: 18px;
     border-radius: 30px;
     cursor: pointer;
-    opacity: 0.9; 
+    opacity: 0.9;
     font-weight: bold;
   }
 
   .logRegForm {
-    background-color: whitesmoke; 
+    background-color: whitesmoke;
     zoom:0.85;
     border: 100px solid whitesmoke;
     border-bottom: 300px solid whitesmoke;
-    
+
   }
   
   .logo{
@@ -78,7 +78,7 @@
     height: 700px;
     text-align: center;
   }
-  
+
   
   .form-group{
     background: white;
@@ -115,7 +115,7 @@
     margin-bottom: 25px;
     padding: 10px 20px;
   }
-  
+
  
   .lbtn{
     background-color: #5089fc; 

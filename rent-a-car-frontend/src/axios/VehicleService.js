@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-const URL = "http://localhost:8080/rac/users";
+const URL = "http://localhost:8080/rac/vehicles";
 
-class UserService{
+class VehicleService{
 
-    getUsers(){
+    getAll(){
         var token = "Bearer " + localStorage.getItem('Authorization');
         var config = {
             headers: {
@@ -14,30 +14,36 @@ class UserService{
         return axios.get(URL, config);
     }
 
-    getUserByUsername(username){
+    getAvailable(){
         var token = "Bearer " + localStorage.getItem('Authorization');
         var config = {
             headers: {
                Authorization: token
             }
         }
-        return axios.get(URL + "/username/" + username, config);
+        return axios.get(URL + '/available', config);
     }
 
-    updateUser(user){
+    newVehicle(vehicle){
         var token = "Bearer " + localStorage.getItem('Authorization');
         var config = {
             headers: {
                Authorization: token
             }
         }
-        return axios.put(URL, user, config);
+        return axios.post(URL, vehicle, config)
     }
 
-    login(user){
-        return axios.post(URL+ "/authenticate", user)
+    deleteVehicle(id){
+        var token = "Bearer " + localStorage.getItem('Authorization');
+        var config = {
+            headers: {
+               Authorization: token
+            }
+        }
+        return axios.delete(URL + '/' + id, config)
     }
 
 }
 
-export default new UserService();
+export default new VehicleService();
