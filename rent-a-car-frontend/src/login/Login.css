@@ -1,46 +1,27 @@
-.buttonLogReg{
 
-  background-color: #5089fc; 
+  .buttonLogReg{
+    background-color: #5089fc;
+    border: 1px solid transparent;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 18px;
+    border-radius: 30px;
+    cursor: pointer;
+    opacity: 0.9;
+    font-weight: bold;
+  }
 
-  border: 1px solid transparent;
+  .logRegForm {
+    background-color: whitesmoke;
+    zoom:0.85;
+    border: 100px solid whitesmoke;
+    border-bottom: 300px solid whitesmoke;
 
-  color: white;
-
-  padding: 10px 20px;
-
-  text-align: center;
-
-  text-decoration: none;
-
-  display: inline-block;
-
-  font-size: 18px;
-
-  border-radius: 30px;
-
-  cursor: pointer;
-
-  opacity: 0.9; 
-
-  font-weight: bold;
-
-}
-
-
-
-.logRegForm {
-
-  background-color: whitesmoke; 
-
-  zoom:0.85;
-
-  border: 100px solid whitesmoke;
-
-  border-bottom: 300px solid whitesmoke;
-
+  }
   
-
-}
   .logo{
     content: url(./login.png);
     width: 120px;
@@ -94,10 +75,9 @@
     border-bottom-left-radius: 30px;
     box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.075);
     width:500px ;
-    height: 800px;
+    height: 700px;
     text-align: center;
   }
-  
 
   
   .form-group{
@@ -135,8 +115,7 @@
     margin-bottom: 25px;
     padding: 10px 20px;
   }
-  
-  
+
  
   .lbtn{
     background-color: #5089fc; 
