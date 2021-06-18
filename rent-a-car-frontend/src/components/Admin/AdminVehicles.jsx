@@ -2,186 +2,248 @@ import { Component } from "react";
 import UserService from "../../axios/UserService";
 import VehicleService from "../../axios/VehicleService";
 import jwt_decode from "jwt-decode";
-import { InputGroup, Table, Image, Container, Button, Form, Modal } from "react-bootstrap";
+import {
+  InputGroup,
+  Table,
+  Image,
+  Container,
+  Button,
+  Form,
+  Modal,
+} from "react-bootstrap";
 import Pagination from "../common/Pagination";
 import EnumService from "../../axios/EnumService";
+import { I18nProvider, LOCALES } from "../../i18n";
+import { FormattedMessage, IntlProvider } from "react-intl";
 
-class AdminVehicles extends Component{
-
-    constructor(props){        
-        super(props);
-        this.state = {
-            user: {},
-            vehicles: [],
-            pageSize: 4,
-            currentPage: 1,
-            showModal: false,
-            newVehicle: {},
-            types: [],
-            manufacturers: []
-        }
-        this.saveChanges = this.saveChanges.bind(this);
-    }
-
-    componentDidMount() {
-        if(localStorage.getItem('Authorization')==null)
-            this.props.history.push('/')
-        else if(jwt_decode(localStorage.getItem('Authorization')).auth != 'ROLE_ADMIN')
-            this.props.history.push('/')
-        else{
-        var username = jwt_decode(localStorage.getItem('Authorization')).sub;
-        UserService.getUserByUsername(username).then(res => {
-            this.setState({user: res.data})
-        });
-        VehicleService.getAll().then(res => {
-            this.setState({vehicles: res.data})
-        })
-        EnumService.getTypes().then(res => {
-            this.setState({types: res.data})
-        })
-        EnumService.getManufacturers().then(res => {
-            this.setState({manufacturers: res.data})
-        })}
-    }
-    
-    handlePageChange = (page) => {
-        this.setState({ currentPage: page });
+class AdminVehicles extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      user: {},
+      vehicles: [],
+      pageSize: 4,
+      currentPage: 1,
+      showModal: false,
+      newVehicle: {},
+      types: [],
+      manufacturers: [],
     };
+    this.saveChanges = this.saveChanges.bind(this);
+  }
 
-    showModal(){
-        this.setState({showModal: true});
+  componentDidMount() {
+    if (localStorage.getItem("Authorization") == null)
+      this.props.history.push("/");
+    else if (
+      jwt_decode(localStorage.getItem("Authorization")).auth != "ROLE_ADMIN"
+    )
+      this.props.history.push("/");
+    else {
+      var username = jwt_decode(localStorage.getItem("Authorization")).sub;
+      UserService.getUserByUsername(username).then((res) => {
+        this.setState({ user: res.data });
+      });
+      VehicleService.getAll().then((res) => {
+        this.setState({ vehicles: res.data });
+      });
+      EnumService.getTypes().then((res) => {
+        this.setState({ types: res.data });
+      });
+      EnumService.getManufacturers().then((res) => {
+        this.setState({ manufacturers: res.data });
+      });
     }
+  }
 
-    hideModal(){
-        this.setState({showModal: false});
-    }
+  handlePageChange = (page) => {
+    this.setState({ currentPage: page });
+  };
 
-    print(){
-        this.state.manufacturers.map((item)=>(
-            console.log(item)
-        )
-        )
-        console.log(this.state.manufacturers)
-    }
+  showModal() {
+    this.setState({ showModal: true });
+  }
 
-    saveChanges = (event ) =>{
-        event.preventDefault()
-        const form = event.currentTarget;
-        let newVehice = {model: form.model.value, manufacturer: form.manufacturer.value, type: form.type.value, mileage: form.mileage.value, productionYear: form.productionYear.value, price: form.price.value}
-        console.log(newVehice)
-        VehicleService.newVehicle(newVehice).then(res =>{
-            window.location.reload(true);
-        })
-        this.hideModal()
-        
-    }
+  hideModal() {
+    this.setState({ showModal: false });
+  }
 
-    deleteVehicle(id){
-        VehicleService.deleteVehicle(id).then(res =>{
-            window.location.reload(true);
-        })
-    }
+  print() {
+    this.state.manufacturers.map((item) => console.log(item));
+    console.log(this.state.manufacturers);
+  }
 
-    render() {
-        const { vehicles, currentPage, pageSize } = this.state;
-        const carsToDisplay = [...vehicles].splice(
-          (currentPage - 1) * pageSize,
-          pageSize
-        );
-        return(
-            <Container>
-                <Table striped bordered hover className="mt-60">
-                    <thead>
-                        <tr>
-                        <th>Image</th>
-                        <th>Model</th>
-                        <th>Manufacturer</th>
-                        <th>Type</th>
-                        <th>Price</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {carsToDisplay.map((item) => (
-                        <tr key={item.id}>
-                            <td style={{width: "25%"}}>
-                                <Image src={process.env.PUBLIC_URL + "/car-default.png"} fluid />
-                            </td>
-                            <td>{item.model}</td>
-                            <td>{item.manufacturer}</td>
-                            <td>{item.type}</td>
-                            <td>{item.price}</td>
-                            <td>
-                                <Button variant="danger" onClick={() => this.deleteVehicle(item.id)} disabled={!item.available}>Delete</Button>
-                            </td>
-                        </tr>
-                        ))}
-                    </tbody>
-                </Table>
-                <Pagination
-                    itemsCount={this.state.vehicles.length}
-                    pageSize={this.state.pageSize}
-                    currentPage={this.state.currentPage}
-                    onPageChange={this.handlePageChange}
-                />
-                <Button variant="primary" onClick={() => {this.showModal()}}>Add new</Button>
+  saveChanges = (event) => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    let newVehice = {
+      model: form.model.value,
+      manufacturer: form.manufacturer.value,
+      type: form.type.value,
+      mileage: form.mileage.value,
+      productionYear: form.productionYear.value,
+      price: form.price.value,
+    };
+    console.log(newVehice);
+    VehicleService.newVehicle(newVehice).then((res) => {
+      window.location.reload(true);
+    });
+    this.hideModal();
+  };
 
-                <Modal show={this.state.showModal}
-                        size="lg"
-                        aria-labelledby="contained-modal-title-vcenter"
-                        centered>
-                    <Modal.Header>
-                    <Modal.Title id="contained-modal-title-vcenter">
-                        New Vehicle
-                    </Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <Form onSubmit={this.saveChanges}>
-                            <Form.Group className="mb-3">
-                                <Form.Label>Model</Form.Label>
-                                <Form.Control name="model" type="text"/>
-                            </Form.Group>
-                            <Form.Group className="mb-3">
-                                <Form.Label>Manufacturer</Form.Label>
-                                <Form.Control name="manufacturer" as="select">{
-                                    this.state.manufacturers.map((item)=>(
-                                        <option value={item}>{item}</option>
-                                    )
-                                    )
-                                }
-                                </Form.Control>
-                            </Form.Group>
-                            <Form.Group className="mb-3">
-                                <Form.Label>Type</Form.Label>                                
-                                <Form.Control name="type" as="select">{
-                                    this.state.types.map((item)=>(
-                                        <option value={item}>{item}</option>
-                                    )
-                                    )
-                                }
-                                </Form.Control>
-                            </Form.Group>
-                            <Form.Group className="mb-3">
-                                <Form.Label>Mileage</Form.Label>
-                                <Form.Control name="mileage" type="number"/>
-                            </Form.Group>
-                            <Form.Group className="mb-3">
-                                <Form.Label>Production year</Form.Label>
-                                <Form.Control name="productionYear" type="number"/>
-                            </Form.Group>
-                            <Form.Group className="mb-3">
-                                <Form.Label>Price</Form.Label>
-                                <Form.Control name="price" type="number"/>
-                            </Form.Group>
-                            <Button variant="outline-success" type="submit">Save</Button>
-                        </Form>
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="outline-danger" onClick={() => {this.hideModal()}}>Cancel</Button>
-                    </Modal.Footer>
-                </Modal>
-            </Container>
-        );
-    }
+  deleteVehicle(id) {
+    VehicleService.deleteVehicle(id).then((res) => {
+      window.location.reload(true);
+    });
+  }
+
+  render() {
+    const { vehicles, currentPage, pageSize } = this.state;
+    const carsToDisplay = [...vehicles].splice(
+      (currentPage - 1) * pageSize,
+      pageSize
+    );
+    return (
+      <I18nProvider locale={localStorage.getItem("language")}>
+        <Container>
+          <Table striped bordered hover className="mt-60">
+            <thead>
+              <tr>
+                <th>
+                  <FormattedMessage id="image" />
+                </th>
+                <th>
+                  <FormattedMessage id="model" />
+                </th>
+                <th>
+                  <FormattedMessage id="m10r" />
+                </th>
+                <th>
+                  <FormattedMessage id="type" />
+                </th>
+                <th>
+                  <FormattedMessage id="price" />
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {carsToDisplay.map((item) => (
+                <tr key={item.id}>
+                  <td style={{ width: "25%" }}>
+                    <Image
+                      src={process.env.PUBLIC_URL + "/car-default.png"}
+                      fluid
+                    />
+                  </td>
+                  <td>{item.model}</td>
+                  <td>{item.manufacturer}</td>
+                  <td>{item.type}</td>
+                  <td>{item.price}</td>
+                  <td>
+                    <Button
+                      variant="danger"
+                      onClick={() => this.deleteVehicle(item.id)}
+                      disabled={!item.available}
+                    >
+                      <FormattedMessage id="delete" />
+                    </Button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+          <Pagination
+            itemsCount={this.state.vehicles.length}
+            pageSize={this.state.pageSize}
+            currentPage={this.state.currentPage}
+            onPageChange={this.handlePageChange}
+          />
+          <Button
+            variant="primary"
+            onClick={() => {
+              this.showModal();
+            }}
+          >
+            <FormattedMessage id="add_new" />
+          </Button>
+
+          <Modal
+            show={this.state.showModal}
+            size="lg"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+          >
+            <Modal.Header>
+              <Modal.Title id="contained-modal-title-vcenter">
+                <FormattedMessage id="new_vehicle" />
+              </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <Form onSubmit={this.saveChanges}>
+                <Form.Group className="mb-3">
+                  <Form.Label>
+                    <FormattedMessage id="model" />
+                  </Form.Label>
+                  <Form.Control name="model" type="text" />
+                </Form.Group>
+                <Form.Group className="mb-3">
+                  <Form.Label>
+                    <FormattedMessage id="m10r" />
+                  </Form.Label>
+                  <Form.Control name="manufacturer" as="select">
+                    {this.state.manufacturers.map((item) => (
+                      <option value={item}>{item}</option>
+                    ))}
+                  </Form.Control>
+                </Form.Group>
+                <Form.Group className="mb-3">
+                  <Form.Label>
+                    <FormattedMessage id="type" />
+                  </Form.Label>
+                  <Form.Control name="type" as="select">
+                    {this.state.types.map((item) => (
+                      <option value={item}>{item}</option>
+                    ))}
+                  </Form.Control>
+                </Form.Group>
+                <Form.Group className="mb-3">
+                  <Form.Label>
+                    <FormattedMessage id="mileage" />
+                  </Form.Label>
+                  <Form.Control name="mileage" type="number" />
+                </Form.Group>
+                <Form.Group className="mb-3">
+                  <Form.Label>
+                    <FormattedMessage id="production_year" />
+                  </Form.Label>
+                  <Form.Control name="productionYear" type="number" />
+                </Form.Group>
+                <Form.Group className="mb-3">
+                  <Form.Label>
+                    <FormattedMessage id="price" />
+                  </Form.Label>
+                  <Form.Control name="price" type="number" />
+                </Form.Group>
+                <Button variant="outline-success" type="submit">
+                  <FormattedMessage id="save" />
+                </Button>
+              </Form>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button
+                variant="outline-danger"
+                onClick={() => {
+                  this.hideModal();
+                }}
+              >
+                <FormattedMessage id="cancel" />
+              </Button>
+            </Modal.Footer>
+          </Modal>
+        </Container>
+      </I18nProvider>
+    );
+  }
 }
 
 export default AdminVehicles;

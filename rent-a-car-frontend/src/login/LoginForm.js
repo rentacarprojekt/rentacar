@@ -18,24 +18,14 @@ class LoginForm extends Component {
     }
 
     onButtonClicked = (e) => {
-
         e.preventDefault();
-
         if (localStorage.getItem('language') == LOCALES.CROATIAN) {
-
             localStorage.setItem('language', LOCALES.ENGLISH);
             this.setState({ label: LOCALES.CROATIAN });
-
-
-
         } else {
-
             localStorage.setItem('language', LOCALES.CROATIAN);
             this.setState({ label: LOCALES.ENGLISH });
-
-
         }
-
     }
 
     componentDidMount() {
@@ -62,7 +52,7 @@ class LoginForm extends Component {
         return (
             <I18nProvider locale={localStorage.getItem('language')}>
                 <form onSubmit={this.submitHandler} className="logRegForm" >
-                    <button onClick={this.onButtonClicked} className="lbtn lang buttonLogReg">{this.state.label}</button>
+                    {/* <button onClick={this.onButtonClicked} className="lbtn lang buttonLogReg">{this.state.label}</button> */}
                     <div className="login-form">
                         <div className="logo"></div>
                         <h2 className="login" ><FormattedMessage id="login" /></h2>
