@@ -7,6 +7,11 @@ import hr.tvz.project.exceptions.EmptyFieldsException;
 import hr.tvz.project.exceptions.UsernameOrEmailAlreadyInUseException;
 import hr.tvz.project.model.User;
 import hr.tvz.project.repository.UserRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -21,9 +26,13 @@ public class UserServiceImpl implements UserService {
 	public UserServiceImpl(UserRepository userRepository) {
 		this.userRepository = userRepository;
 	}
+	
+	@Autowired
+    private PasswordEncoder passwordEncoder;
 
 	@Override
 	public UserDetailsDto createNewUser(UserRegistrationDto newUser) throws UsernameOrEmailAlreadyInUseException {
+		newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
 		boolean usernameInUse = userRepository.findByUsernameLike(newUser.getUsername())!=null;
 		boolean emailInUse = userRepository.findByEmailLike(newUser.getEmail())!=null;
 		if(newUser.getFirstName()==null || newUser.getLastName() == null || newUser.getEmail() == null || newUser.getUsername() == null || newUser.getPassword() == null)
