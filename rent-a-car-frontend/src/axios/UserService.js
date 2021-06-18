@@ -38,6 +38,10 @@ class UserService{
         return axios.post(URL+ "/authenticate", user)
     }
 
+    register(user){
+        return axios.post(URL, user)
+    }
+
 }
 
 export default new UserService();

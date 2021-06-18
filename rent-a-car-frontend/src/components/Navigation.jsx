@@ -5,11 +5,11 @@ import NotFound from "./NotFound";
 import Home from "./Home";
 import UserProfile from "./User/UserProfile";
 import LoginForm from "../login/LoginForm";
-import RegisterForm from "../register/RegisterForm";
 import { LOCALES } from "../i18n";
 import AdminUsers from "./Admin/AdminUsers";
 import AdminVehicles from "./Admin/AdminVehicles";
 import jwt_decode from "jwt-decode";
+import RegisterForm from "../register/RegisterForm";
 
 class Navigation extends Component {
   constructor(props) {
