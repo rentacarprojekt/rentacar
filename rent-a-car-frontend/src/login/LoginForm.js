@@ -4,6 +4,7 @@ import { I18nProvider, LOCALES } from '../i18n';
 import { FormattedMessage, IntlProvider } from 'react-intl';
 import './Login.css';
 import UserService from '../axios/UserService';
+import { Alert } from "react-bootstrap";
 
 
 class LoginForm extends Component {
@@ -37,14 +38,23 @@ class LoginForm extends Component {
 
     }
 
+    componentDidMount() {
+        if(localStorage.getItem('Authorization')!=null)
+            this.props.history.push('/')
+    }
+
     submitHandler = e => {
         e.preventDefault();
-        //Login(details);
+        console.log(this.state.error)
         const form = e.currentTarget;
         let user = {username: form.name.value, password: form.password.value}
-        UserService.login(user).then(res =>{
-            localStorage.setItem('Authorization', res.data.token)
-            this.props.history.push('/')
+        UserService.login(user)
+        .then(res =>{
+                localStorage.setItem('Authorization', res.data.token)
+                this.props.history.push('/')
+        })
+        .catch(err =>{
+            this.setState({error: "error"})
         })
     }
 
@@ -56,7 +66,12 @@ class LoginForm extends Component {
                     <div className="login-form">
                         <div className="logo"></div>
                         <h2 className="login" ><FormattedMessage id="login" /></h2>
-                        {(this.state.error != "") ? (<div className="error"><FormattedMessage classname="error" id="details_mismatch" /></div>) : ""}
+                        <Alert variant="danger" hidden={this.state.error==''}>
+                            <p>
+                            <FormattedMessage classname="error" id="details_mismatch" />
+                            </p>
+                        </Alert>
+                        {/*(this.state.error != "") ? (<div className="error"><FormattedMessage classname="error" id="details_mismatch" /></div>) : ""*/}
                         <div className="form-group">
                             <FormattedMessage id="username">
                                 {placeholder =>
