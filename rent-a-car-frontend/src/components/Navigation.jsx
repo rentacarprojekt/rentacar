@@ -8,6 +8,7 @@ import LoginForm from "../login/LoginForm";
 import RegisterForm from "../register/RegisterForm";
 import { LOCALES } from "../i18n";
 import AdminUsers from "./Admin/AdminUsers";
+import AdminVehicles from "./Admin/AdminVehicles";
 
 class Navigation extends Component {
   state = {
@@ -82,6 +83,7 @@ class Navigation extends Component {
           <Route exact path="/login" component={LoginForm} />
           <Route exact path="/register" component={RegisterForm} />
           <Route exact path="/admin-users" component={AdminUsers} />
+          <Route exact path="/admin-vehicles" component={AdminVehicles} />
           <Container>
             <Route path="/" component={NotFound} />
           </Container>

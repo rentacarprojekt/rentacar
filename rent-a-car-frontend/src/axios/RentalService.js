@@ -8,7 +8,7 @@ class RentalService{
         var token = "Bearer " + localStorage.getItem('Authorization');
         var config = {
             headers: {
-               Authorization: "Bearer " + localStorage.getItem('Authorization')
+               Authorization: token
             }
          }
         return axios.get(URL + "/user/" + username, config);
