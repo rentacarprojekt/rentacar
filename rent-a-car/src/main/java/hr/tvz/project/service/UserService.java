@@ -5,7 +5,9 @@ import hr.tvz.project.dto.UserLoginDto;
 import hr.tvz.project.dto.UserRegistrationDto;
 import hr.tvz.project.exceptions.UsernameOrEmailAlreadyInUseException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.List;
 
 @Service
@@ -24,5 +26,7 @@ public interface UserService {
     UserDetailsDto authenticateUser(UserLoginDto user);
 
     UserDetailsDto updateUser(UserDetailsDto updatedUser);
+    
+    void changeImage(String username, MultipartFile image);
 
 }

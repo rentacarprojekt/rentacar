@@ -36,3 +36,15 @@
     transform: rotate(360deg);
   }
 }
+
+.profilePicture{
+  width: 126px;
+  height: 144px;
+  object-fit: cover;
+}
+
+.carPicture{
+  width: 252px;
+  height: 194px;
+  object-fit: cover;
+}

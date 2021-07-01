@@ -3,6 +3,7 @@ package hr.tvz.project.service;
 import hr.tvz.project.dto.VehicleDetailsDto;
 import hr.tvz.project.exceptions.VehicleNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -20,5 +21,7 @@ public interface VehicleService{
     List<VehicleDetailsDto> getAvailableCars();
     
     void setAvailable(int id, boolean isAvailable);
+    
+    void changeImage(Integer id, MultipartFile image);
 
 }

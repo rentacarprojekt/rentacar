@@ -12,6 +12,7 @@ import hr.tvz.project.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,7 +20,9 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.List;
 
 @RestController
@@ -84,6 +87,12 @@ public class UserController {
     @PutMapping
     public ResponseEntity<String> updateUser(@RequestBody UserDetailsDto updatedUser){
     	userService.updateUser(updatedUser);
+    	return new ResponseEntity<String>(HttpStatus.ACCEPTED);
+    }
+    
+    @PostMapping(path="/{username}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<String> changeImage(@PathVariable String username, @RequestParam MultipartFile file){
+    	userService.changeImage(username, file);
     	return new ResponseEntity<String>(HttpStatus.ACCEPTED);
     }
 

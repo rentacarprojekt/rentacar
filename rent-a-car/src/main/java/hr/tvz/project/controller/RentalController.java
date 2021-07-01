@@ -58,7 +58,7 @@ public class RentalController {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
         }
 
-        return new ResponseEntity<String>(HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
 }

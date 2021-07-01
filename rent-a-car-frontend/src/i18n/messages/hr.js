@@ -8,6 +8,8 @@ export default {
         'register': 'Registracija',
         'details_mismatch': "Krivi podaci!",
 
+        'change_profile_picture': "Promijeni sliku profila",
+        'change': "Promijeni",
         'first_name': "Ime",
         'last_name': 'Prezime',
         'full_name' : 'Puno ime',
@@ -32,6 +34,7 @@ export default {
         'example': 'Primjer',
         'profile': 'Profil',
 
+        'change_image': 'Promijeni sliku',
         'image': 'Slika',
         'model': 'Model',
         'm10r': 'Proizvođač',

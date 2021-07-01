@@ -11,7 +11,7 @@ import java.util.*;
 @Repository
 public class MockRentalRepository implements RentalRepository{
 
-    private final Set<Rental> MOCKED_RENTALS = new HashSet<>(
+    private final Set<Rental> mockedRentals = new HashSet<>(
             Arrays.asList(
                     new Rental(1, "Ivan Zovkić","Mercedes AMG", "12.2.2021","1.3.2022","5.5.2022"),
                     new Rental(1, "Marko Andlar","Toyota RAV", "3.2.2022","4.3.2022","6.3.2022")
@@ -21,18 +21,18 @@ public class MockRentalRepository implements RentalRepository{
 
     @Override
     public Set<Rental> findAll() {
-        return MOCKED_RENTALS;
+        return mockedRentals;
     }
 
     @Override
     public Optional<Rental> findByUser(User user) {
-        return MOCKED_RENTALS.stream().filter(rental -> rental.getUser().equals(user)).findAny();
+        return mockedRentals.stream().filter(rental -> rental.getUser().equals(user)).findAny();
     }
 
     @Override
     public Optional<Rental> save(Rental rental) {
-        if(!MOCKED_RENTALS.contains(rental)){
-            MOCKED_RENTALS.add(rental);
+        if(!mockedRentals.contains(rental)){
+            mockedRentals.add(rental);
             return Optional.of(rental);
         } else {
             return Optional.empty();
@@ -41,12 +41,12 @@ public class MockRentalRepository implements RentalRepository{
 
     @Override
     public Optional<Rental> delete(Rental rental) {
-        boolean exists = MOCKED_RENTALS.removeIf(
+        boolean exists = mockedRentals.removeIf(
                 rental1 -> Objects.equals(rental1.getUser(), rental.getUser())
         );
 
         if(exists){
-            MOCKED_RENTALS.remove(rental);
+            mockedRentals.remove(rental);
             return Optional.of(rental);
         } else {
             return Optional.empty();

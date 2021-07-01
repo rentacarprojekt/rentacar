@@ -8,6 +8,8 @@ export default {
         'register': 'Register',
         'details_mismatch': "Details do not match!",
 
+        'change_profile_picture': "Change profile picture",
+        'change': "Change",
         'first_name': "First name",
         'last_name': 'Last name',
         'full_name' : 'Full name',
@@ -32,6 +34,7 @@ export default {
         'example': 'Example',
         'profile': 'Profile',
 
+        'change_image': 'Change image',
         'image': 'Image',
         'model': 'Model',
         'm10r': 'Manufacturer',

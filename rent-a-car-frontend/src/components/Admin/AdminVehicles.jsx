@@ -21,10 +21,13 @@ class AdminVehicles extends Component {
     super(props);
     this.state = {
       user: {},
+      newImage: null,
       vehicles: [],
       pageSize: 4,
       currentPage: 1,
       showModal: false,
+      showModal3: false,
+      vehicleId: null,
       newVehicle: {},
       types: [],
       manufacturers: [],
@@ -64,8 +67,16 @@ class AdminVehicles extends Component {
     this.setState({ showModal: true });
   }
 
+  showModal3(rentalDetails) {
+    this.setState({ showModal3: true });
+  }
+
   hideModal() {
     this.setState({ showModal: false });
+  }
+
+  hideModal3() {
+    this.setState({ showModal3: false, newImage: null });
   }
 
   print() {
@@ -95,6 +106,16 @@ class AdminVehicles extends Component {
     VehicleService.deleteVehicle(id).then((res) => {
       window.location.reload(true);
     });
+  }
+
+  fileSelectHandler = event =>{    
+    this.setState({ newImage: event.target.files[0] });
+  }
+
+  fileUploadHandler = () =>{
+    const formData = new FormData();
+        formData.append('file', this.state.newImage);
+    VehicleService.changeImage(this.state.vehicleId, formData)
   }
 
   render() {
@@ -130,10 +151,16 @@ class AdminVehicles extends Component {
               {carsToDisplay.map((item) => (
                 <tr key={item.id}>
                   <td style={{ width: "25%" }}>
+                  {
+                  item.imagePath != null ?
+                    <Image className="carPicture" src={item.imagePath} />
+                  :
                     <Image
                       src={process.env.PUBLIC_URL + "/car-default.png"}
                       fluid
                     />
+                  }
+                    
                   </td>
                   <td>{item.model}</td>
                   <td>{item.manufacturer}</td>
@@ -146,6 +173,15 @@ class AdminVehicles extends Component {
                       disabled={!item.available}
                     >
                       <FormattedMessage id="delete" />
+                    </Button> <br /> <br />
+                    <Button
+                      variant="info"
+                      onClick={() => {
+                        this.setState({vehicleId: item.id})
+                        this.showModal3();
+                      }}
+                    >
+                      <FormattedMessage id="change_image" />
                     </Button>
                   </td>
                 </tr>
@@ -237,6 +273,48 @@ class AdminVehicles extends Component {
                 }}
               >
                 <FormattedMessage id="cancel" />
+              </Button>
+            </Modal.Footer>
+          </Modal>
+          <Modal
+            show={this.state.showModal3}
+            size="lg"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+          >
+            <Modal.Header>
+              <Modal.Title id="contained-modal-title-vcenter">
+                <FormattedMessage id="change_profile_picture" />
+              </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <Form>
+                <Form.Group className="mb-3">
+                  <Form.Label>
+                    <FormattedMessage id="image" />
+                  </Form.Label>
+                  <Form.Control
+                    type="file"
+                    onChange={this.fileSelectHandler}
+                  />
+                </Form.Group>
+              </Form>
+              <Button
+                variant="outline-success"
+                onClick={
+                  this.fileUploadHandler
+                }
+                disabled={this.state.newImage == null ? true:false }
+              ><FormattedMessage id="change" /></Button>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button
+                variant="outline-danger"
+                onClick={() => {
+                  this.hideModal3();
+                }}
+              >
+                <FormattedMessage id="close" />
               </Button>
             </Modal.Footer>
           </Modal>

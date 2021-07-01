@@ -42,7 +42,7 @@ public class RentalServiceImpl implements RentalService {
 
     @Override
     public void deleteRental(Integer id) throws RentalNotFoundException {
-        Rental rental = rentalRepository.findById(id).orElse(null);
+        var rental = rentalRepository.findById(id).orElse(null);
         if(rental!=null){
             rentalRepository.delete(rental);
         } else {
@@ -58,7 +58,7 @@ public class RentalServiceImpl implements RentalService {
 
     @Override
     public RentalDetailsDto getRentalById(Integer id) {
-        Rental rental = rentalRepository.findById(id).orElse(null);
+        var rental = rentalRepository.findById(id).orElse(null);
         if(rental!=null)
             return new RentalDetailsDto(rental);
         else
