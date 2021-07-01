@@ -16,7 +16,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 
-import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -63,14 +62,14 @@ public class TokenProvider {
     }
 
     public Authentication getAuthentication(String token) {
-        Claims claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
+        var claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
 
         Collection<? extends GrantedAuthority> authorities = Arrays
                 .stream(claims.get(AUTHORITIES_KEY).toString().split(","))
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
 
-        User principal = new User(claims.getSubject(), "", authorities);
+        var principal = new User(claims.getSubject(), "", authorities);
 
         return new UsernamePasswordAuthenticationToken(principal, token, authorities);
     }

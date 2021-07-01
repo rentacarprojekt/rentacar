@@ -17,12 +17,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.util.List;
 
 @RestController
@@ -46,7 +44,7 @@ public class UserController {
 		catch (UsernameOrEmailAlreadyInUseException|EmptyFieldsException e) {
 			return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
 		}
-		return new ResponseEntity<String>(HttpStatus.CREATED);
+		return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping("/username/{username}")
@@ -71,14 +69,14 @@ public class UserController {
 
     @PostMapping("/authenticate")
     public ResponseEntity<JsonWebToken> authenticateUser(@RequestBody UserLoginDto user) {
-    	UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
+    	var authenticationToken = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
 
-    	Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+    	var authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
     	SecurityContextHolder.getContext().setAuthentication(authentication);
 
     	String jwt = tokenProvider.createToken(authentication);
 
-    	HttpHeaders httpHeaders = new HttpHeaders();
+    	var httpHeaders = new HttpHeaders();
     	httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
 
     	return new ResponseEntity<>(new JsonWebToken(jwt), httpHeaders, HttpStatus.OK);
@@ -87,13 +85,13 @@ public class UserController {
     @PutMapping
     public ResponseEntity<String> updateUser(@RequestBody UserDetailsDto updatedUser){
     	userService.updateUser(updatedUser);
-    	return new ResponseEntity<String>(HttpStatus.ACCEPTED);
+    	return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
     
     @PostMapping(path="/{username}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<String> changeImage(@PathVariable String username, @RequestParam MultipartFile file){
     	userService.changeImage(username, file);
-    	return new ResponseEntity<String>(HttpStatus.ACCEPTED);
+    	return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
 }
