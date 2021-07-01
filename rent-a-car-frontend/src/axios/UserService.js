@@ -34,6 +34,16 @@ class UserService{
         return axios.put(URL, user, config);
     }
 
+    changeImage(username, file){
+        var token = "Bearer " + localStorage.getItem('Authorization');
+        var config = {
+            headers: {
+               Authorization: token
+            }
+        }
+        return axios.post(URL + "/" + username, file, config);
+    }
+
     login(user){
         return axios.post(URL+ "/authenticate", user)
     }

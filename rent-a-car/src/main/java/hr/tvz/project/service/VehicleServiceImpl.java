@@ -5,7 +5,10 @@ import hr.tvz.project.exceptions.VehicleNotFoundException;
 import hr.tvz.project.model.Vehicle;
 import hr.tvz.project.repository.VehicleRepository;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,7 +29,7 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     public VehicleDetailsDto getById(Integer id) {
-        Vehicle vehicle = vehicleRepository.findById(id).orElse(null);
+        var vehicle = vehicleRepository.findById(id).orElse(null);
         if (vehicle != null)
             return new VehicleDetailsDto(vehicle);
         else
@@ -36,7 +39,7 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     public void delete(Integer id) throws VehicleNotFoundException {
-        Vehicle vehicle = vehicleRepository.findById(id).orElse(null);
+        var vehicle = vehicleRepository.findById(id).orElse(null);
         if(vehicle!=null){
             vehicleRepository.delete(vehicle);
         } else {
@@ -57,9 +60,30 @@ public class VehicleServiceImpl implements VehicleService {
 
 	@Override
 	public void setAvailable(int id, boolean isAvailable) {
-		Vehicle vehicle = vehicleRepository.findById(id).orElse(null);
+		var vehicle = vehicleRepository.findById(id).orElse(null);
+		if(vehicle!=null) {
 		vehicle.setAvailable(isAvailable);
-		vehicleRepository.save(vehicle);
+		vehicleRepository.save(vehicle);}
+		
+	}
+
+	@Override
+	public void changeImage(Integer id, MultipartFile image) {
+		var vehicle = vehicleRepository.findById(id).orElse(null);
+		String filePath = "C:\\Users\\Bruno\\Documents\\faks\\rent-a-car-projekt\\rent-a-car-frontend\\public\\carImages\\" + id + ".jpg";
+		var dest = new File(filePath);
+		if(!dest.exists())
+	    {
+	       new File(filePath).mkdir();
+	    }
+	       try {
+			image.transferTo(dest);
+		} catch (IllegalStateException | IOException e) {
+			e.printStackTrace();
+		}
+	       if(vehicle!=null) {
+	       vehicle.setImagePath("\\carImages\\" + id + ".jpg");
+	       vehicleRepository.save(vehicle);}
 		
 	}
 

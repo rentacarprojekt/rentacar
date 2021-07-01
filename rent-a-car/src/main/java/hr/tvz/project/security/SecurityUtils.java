@@ -5,7 +5,6 @@ import java.util.stream.Stream;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -15,7 +14,7 @@ public final class SecurityUtils {
     }
 
     public static Optional<String> getCurrentUserUsername() {
-        SecurityContext securityContext = SecurityContextHolder.getContext();
+        var securityContext = SecurityContextHolder.getContext();
         return Optional.ofNullable(extractPrincipal(securityContext.getAuthentication()));
     }
 
@@ -33,7 +32,7 @@ public final class SecurityUtils {
 
 
     public static Optional<String> getCurrentUserJWT() {
-        SecurityContext securityContext = SecurityContextHolder.getContext();
+        var securityContext = SecurityContextHolder.getContext();
         return Optional
                 .ofNullable(securityContext.getAuthentication())
                 .filter(authentication -> authentication.getCredentials() instanceof String)
@@ -41,7 +40,7 @@ public final class SecurityUtils {
     }
 
     public static boolean isCurrentUserInRole(String authority) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        var authentication = SecurityContextHolder.getContext().getAuthentication();
         return authentication != null && getAuthorities(authentication).anyMatch(authority::equals);
     }
 

@@ -77,10 +77,15 @@ class Home extends Component {
                 {carsToDisplay.map((item) => (
                   <tr key={item.id}>
                     <td style={{ width: "25%" }}>
-                      <Image
-                        src={process.env.PUBLIC_URL + "/car-default.png"}
-                        fluid
-                      />
+                    {
+                      item.imagePath != null ?
+                        <Image className="carPicture" src={item.imagePath} />
+                      :
+                        <Image
+                          src={process.env.PUBLIC_URL + "/car-default.png"}
+                          fluid
+                        />
+                      }
                     </td>
                     <td>{item.model}</td>
                     <td>{item.manufacturer}</td>

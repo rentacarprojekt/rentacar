@@ -17,9 +17,11 @@ class UserProfile extends Component {
     super(props);
     this.state = {
       rentals: [],
-      user: {},
+      user: {},      
+      newImage: null,
       showModal: false,
       showModal2: false,
+      showModal3: false,
       editedUser: {},
       rental: {
         vehicle: {
@@ -81,12 +83,20 @@ class UserProfile extends Component {
     this.setState({ showModal2: true });
   }
 
+  showModal3(rentalDetails) {
+    this.setState({ showModal3: true });
+  }
+
   hideModal() {
     this.setState({ showModal: false });
   }
 
   hideModal2() {
     this.setState({ showModal2: false });
+  }
+
+  hideModal3() {
+    this.setState({ showModal3: false, newImage: null });
   }
 
   saveChanges() {
@@ -110,13 +120,36 @@ class UserProfile extends Component {
     });
   }
 
+  fileSelectHandler = event =>{    
+    this.setState({ newImage: event.target.files[0] });
+  }
+
+  fileUploadHandler = () =>{
+    const formData = new FormData();
+        formData.append('file', this.state.newImage);
+    UserService.changeImage(this.state.user.username, formData)
+  }
+
   render() {
     return (
       <I18nProvider locale={localStorage.getItem("language")}>
         <Container>
           <Row>
             <Col className="text-center mt-60">
-              <FontAwesomeIcon icon="user" size="9x" />
+              {
+              this.state.user.imagePath != null ?
+                <Image className="profilePicture" src={this.state.user.imagePath} />
+              :
+                <FontAwesomeIcon icon="user" size="9x" />
+              }
+              <br />
+              <br />
+              <Button
+                variant="outline-info"
+                onClick={() => {
+                  this.showModal3();
+                }}
+              ><FormattedMessage id="change_profile_picture" /></Button>
               <br />
               <br />
               <h3>{this.state.user.username}</h3>
@@ -427,6 +460,49 @@ class UserProfile extends Component {
                 variant="outline-danger"
                 onClick={() => {
                   this.hideModal2();
+                }}
+              >
+                <FormattedMessage id="close" />
+              </Button>
+            </Modal.Footer>
+          </Modal>
+
+          <Modal
+            show={this.state.showModal3}
+            size="lg"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+          >
+            <Modal.Header>
+              <Modal.Title id="contained-modal-title-vcenter">
+                <FormattedMessage id="change_profile_picture" />
+              </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <Form>
+                <Form.Group className="mb-3">
+                  <Form.Label>
+                    <FormattedMessage id="image" />
+                  </Form.Label>
+                  <Form.Control
+                    type="file"
+                    onChange={this.fileSelectHandler}
+                  />
+                </Form.Group>
+              </Form>
+              <Button
+                variant="outline-success"
+                onClick={
+                  this.fileUploadHandler
+                }
+                disabled={this.state.newImage == null ? true:false }
+              ><FormattedMessage id="change" /></Button>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button
+                variant="outline-danger"
+                onClick={() => {
+                  this.hideModal3();
                 }}
               >
                 <FormattedMessage id="close" />

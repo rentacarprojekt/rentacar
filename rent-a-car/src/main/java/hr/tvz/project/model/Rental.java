@@ -1,7 +1,6 @@
 package hr.tvz.project.model;
 
 import hr.tvz.project.dto.RentalDetailsDto;
-import hr.tvz.project.dto.VehicleDetailsDto;
 
 import java.io.Serializable;
 import java.time.LocalDate;

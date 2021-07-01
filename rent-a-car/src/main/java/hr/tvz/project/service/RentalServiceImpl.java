@@ -32,7 +32,7 @@ public class RentalServiceImpl implements RentalService {
     	VehicleDetailsDto vehicle = vehicleService.getById(newRental.getVehicle().getId());
     	newRental.setDateFrom(LocalDate.now());
     	if(vehicle.isAvailable()) {
-    		Rental rental = rentalRepository.save(new Rental(newRental));
+    		var rental = rentalRepository.save(new Rental(newRental));
     		vehicleService.setAvailable(newRental.getVehicle().getId(), false);
     		return new RentalDetailsDto(rental);
     	}
@@ -42,7 +42,7 @@ public class RentalServiceImpl implements RentalService {
 
     @Override
     public void deleteRental(Integer id) throws RentalNotFoundException {
-        Rental rental = rentalRepository.findById(id).orElse(null);
+        var rental = rentalRepository.findById(id).orElse(null);
         if(rental!=null){
             rentalRepository.delete(rental);
         } else {
@@ -58,7 +58,7 @@ public class RentalServiceImpl implements RentalService {
 
     @Override
     public RentalDetailsDto getRentalById(Integer id) {
-        Rental rental = rentalRepository.findById(id).orElse(null);
+        var rental = rentalRepository.findById(id).orElse(null);
         if(rental!=null)
             return new RentalDetailsDto(rental);
         else
@@ -78,14 +78,15 @@ public class RentalServiceImpl implements RentalService {
             return rentalList;
         }
         else
-            return null;
+            return new ArrayList<>();
 	}
 
 	@Override
 	public void updateRental(RentalDetailsDto updatedRental) {
-		Rental rental = rentalRepository.findById(updatedRental.getId()).orElse(null);
+		var rental = rentalRepository.findById(updatedRental.getId()).orElse(null);
+		if(rental!=null) {
 		rental.setReturnDate(LocalDate.now());
 		vehicleService.setAvailable(updatedRental.getVehicle().getId(), true);
-		rentalRepository.save(rental);		
+		rentalRepository.save(rental);	}	
 	}
 }

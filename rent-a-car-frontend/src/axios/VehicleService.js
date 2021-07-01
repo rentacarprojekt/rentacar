@@ -44,6 +44,16 @@ class VehicleService{
         return axios.delete(URL + '/' + id, config)
     }
 
+    changeImage(id, file){
+        var token = "Bearer " + localStorage.getItem('Authorization');
+        var config = {
+            headers: {
+               Authorization: token
+            }
+        }
+        return axios.post(URL + "/" + id, file, config);
+    }
+
 }
 
 export default new VehicleService();

@@ -5,8 +5,10 @@ import hr.tvz.project.dto.VehicleDetailsDto;
 import hr.tvz.project.exceptions.VehicleNotFoundException;
 import hr.tvz.project.service.VehicleService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -53,7 +55,13 @@ public class VehicleController {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
         }
 
-        return new ResponseEntity<String>(HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+    
+    @PostMapping(path="/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<String> changeImage(@PathVariable Integer id, @RequestParam MultipartFile file){
+    	vehicleService.changeImage(id, file);
+    	return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
 
