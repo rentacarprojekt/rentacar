@@ -137,7 +137,7 @@ class UserProfile extends Component {
           <Row>
             <Col className="text-center mt-60">
               {
-              this.state.user.imagePath != null ?
+              (this.state.user.imagePath != null && this.state.user.imagePath != "") ?
                 <Image className="profilePicture" src={this.state.user.imagePath} />
               :
                 <FontAwesomeIcon icon="user" size="9x" />
