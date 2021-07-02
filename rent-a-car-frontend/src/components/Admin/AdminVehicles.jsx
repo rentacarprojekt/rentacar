@@ -79,11 +79,6 @@ class AdminVehicles extends Component {
     this.setState({ showModal3: false, newImage: null });
   }
 
-  print() {
-    this.state.manufacturers.map((item) => console.log(item));
-    console.log(this.state.manufacturers);
-  }
-
   saveChanges = (event) => {
     event.preventDefault();
     const form = event.currentTarget;
